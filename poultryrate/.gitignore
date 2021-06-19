@@ -1,0 +1,11 @@
+# python
+__pycache__/
+config_files/
+data_files/
+
+# misc
+twint.txt
+twint-last-request.txt
+run automate api.bat
+run automate daily script day by day from today.bat
+run automate tasks.bat
