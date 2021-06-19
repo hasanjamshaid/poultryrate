@@ -1,0 +1,9 @@
+english:urdu
+Last Year:گزشتہ_سال
+Eggs 30 Dozen rate:ایگز🥚(پیٹی) کا ریٹ
+City:سٹی
+Farm rate:فارم ریٹ
+Mandi open:منڈی اوپن
+Mandi Sale:منڈی سیل
+Egg dozen rate:(پیٹی) کا ریٹ
+Chick rate:چوزے کا ریٹ

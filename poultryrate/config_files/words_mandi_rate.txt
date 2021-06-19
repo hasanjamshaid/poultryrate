@@ -1,0 +1,6 @@
+english:urdu
+City~Farm Rate (Mandi Open) Mandi Sale:سٹی~ فارم ریٹ (منڈی اوپن) منڈی سیل
+Farm Rate (Mandi Open) Mandi Sale: فارم ریٹ (منڈی اوپن) منڈی سیل
+(Mandi Open) Mandi Sale:(منڈی اوپن) منڈی سیل
+Mandi Open:منڈی اوپن
+Mandi Sale:منڈی سیل

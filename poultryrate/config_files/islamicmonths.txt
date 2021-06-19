@@ -1,0 +1,13 @@
+english:urdu
+Muharram:محرم
+Safar:صفر
+Rabi al-Awwal:ر بیع الاول
+Rabi al-Thani:ر بیع الثانی
+Jumada al-Ula:جمادی الاول
+Jumada al-Thaniya:جمادی الثانی
+Rajab:رجب
+Shaʿban:شعبان
+Ramadan:رمضان
+Shawwal:شوال
+Dhu al-Qaʿda:ذوالقعدۃ
+Dhu al-Hijja:ذوالحجۃ

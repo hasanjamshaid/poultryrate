@@ -1,0 +1,30 @@
+english:urdu
+Farmer Saafi Product Rate:فارمر صافی فروخت مال ریٹ
+Broiler Farm Rate:برائلر فارم نرخ
+Broiler Farm Rate:بَرائِلر فارم نرخ
+Broiler Farm Rate:برائلر فارم ریٹ
+Farm Rate:فارم ریٹ
+via:بزریعہ
+Sir:صاحب
+Association:ایسوسی ایشن
+Announcement:اناوُنسمنٹ
+Chairman:ڄیئرمین
+Chairman:چیئرمین
+Mazda loading:مزدا لوڈنگ
+For today:آج کیلیے
+Sindh Balochistan:sindh balochistan
+INCREASED:increased
+DECREASED:decreased
+Todays broiler rate announcement:آج کیلیے برائلر زندہ فارم نرخ اناوُنسمنٹ
+Broiler farmers Association:برائلر فارمرز ایسوسی ایشن،پنجاب
+General Secrectary:جنرل سیکرٹری
+Allah saay daar aur tooba tooba kar:اللہ سے ڈر اور توبہ توبہ کر
+Today broiler farmer gate rate:آج برائلر فارمز گیٹ ریٹ
+Mazda loading rate:مزدا لوڈنگ کیلیے نرخ
+Broiler farmers association:برائلر فارمرز ایسوسی ایشن
+Poultry control shed owners association:پولٹری کنٹرول شیڈ مالکان ایسوسی ایشن
+Suggested:تجویز کردہ
+Trade commission:ٹریڈ کمیشن
+Chairman broiler farmers association:چیئرمین برائلر فارمرز ایسوسی ایشن
+Cost:قیمت
+Less rate:لیس ریٹ

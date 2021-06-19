@@ -1,0 +1,22 @@
+english:urdu
+Broiler Supply Rate List:برائلر سپلائی ریٹ لسٹ
+Supply Rate List:سپلائی ریٹ لسٹ
+Live Broiler Retail Rate:زندہ برائلر ریٹیل ریٹ
+Broiler Supply Rate:برائلر سپلائی ریٹ
+Broiler Whole Sale Supply:برائلر ہول سیل سپلائی
+Supply Rate List:سپلائی_ریٹ_لسٹ
+Broiler Supply Rate:برائلر سپلائی ریٹ
+Broiler Farm Rate:برائلر فارم ریٹ
+Broiler Farm Rate:برائلر فائنل فارم ریٹ
+Broiler Meat Rate:برائلر گوشت
+Broiler Wholesale Supply:برائلر ہول سیل سپلائی
+Broiler Wholesale Supply Rate:برائلر ہول سیل سپلائی ریٹ
+Broiler Supply Rate List:برائلر سپلائی ریٹ لسٹ
+Mandi Rate:منڈی ریٹ
+Retail Egg Dozen:ریٹیل انڈے درجن
+Live Broiler Rate:زندہ برائلر ریٹ
+Live Broiler Retail:زندہ برائلر ریٹیل
+Live Broiler Retail Rate:زندہ برائلر ریٹیل ریٹ
+Healthy Chicken Rate:صحت مند مرغی کا ریٹ
+Government Farm Rate:گورنمنٹ فارم ریٹ
+Wholesale 30 Dozen Rate:ہول سیل انڈے🥚30 درجن

@@ -1,0 +1,4 @@
+english:urdu
+Page:page
+Page Admin:page admin
+Mian Shahzad Saeed:mian Shahzad Saeed
