@@ -1,7 +1,0 @@
-english:urdu
-Today Layer Culling Per Bird Rate:today layer culling per bird rate
-Layer Culling Per Bird Rate:layer culling per bird rate
-Layer Culling Per Bird:layer culling per bird
-Cage:cage
-Floor:floor
-
