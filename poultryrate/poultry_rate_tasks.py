@@ -35,10 +35,10 @@ def main() -> None:
     parser = configparser.ConfigParser()
     print('Hello World')	
     #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
-    ini_path = os.path.join('poultryrate','poultryrate.cfg')
+    ini_path = os.path.join('app','poultryrate.cfg')
     
     print(ini_path)
-    parser.read('poultryrate.cfg')
+    parser.read(ini_path)
 
     print ("os detected ", platform)
 
