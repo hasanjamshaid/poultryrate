@@ -28,7 +28,7 @@ import flask
 import pandas as pd
 from sys import platform
 
-os.environ['build_mode'] = 'release' ### debug or release
+os.environ['build_mode'] = 'debug' ### debug or release
 
 #db_host="hasanjamshaid.mysql.pythonanywhere-services.com"
 #db_username="hasanjamshaid"
@@ -56,7 +56,7 @@ def main() -> None:
     ini_path = os.path.join('poultryrate','poultryrate.cfg')
     
     print(ini_path)
-    parser.read(ini_path)
+    parser.read('poultryrate.cfg')
 
     print ("os detected ", platform)
 
@@ -122,8 +122,56 @@ def main() -> None:
 
 @app.route('/', methods=['GET'])
 def home():
-    return '''<h1>Poultry rates api</h1>
-<p>A prototype API for fetching poultry rate.</p>'''
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+
+@app.route('/initialize', methods=['GET'])
+def initialize():
+    parser = configparser.ConfigParser()
+    #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
+    ini_path = os.path.join('poultryrate','poultryrate.cfg')
+    
+    print(ini_path)
+    parser.read('poultryrate.cfg')
+
+    print ("os detected ", platform)
+
+    if platform == "linux" or platform == "linux2":
+        # linux
+        os.environ['data_files_path']=parser['DEFAULT_LINUX']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_LINUX']['config_path']
+        os.environ['db_host']=parser['DEFAULT_LINUX']['db_host']
+        os.environ['db_port']=parser['DEFAULT_LINUX']['db_port']
+        os.environ['db_username']=parser['DEFAULT_LINUX']['db_username']
+        os.environ['db_password']=parser['DEFAULT_LINUX']['db_password']
+        os.environ['host']=parser['DEFAULT_LINUX']['host']
+        os.environ['port']=parser['DEFAULT_LINUX']['port']
+
+    elif platform == "darwin":
+        # OS X
+        os.environ['data_path']=parser['DARWIN_DEFAULT']['data_path']
+        os.environ['config_path']=parser['DARWIN_DEFAULT']['config_path']        
+    elif platform == "win32":
+        # Windows...
+        os.environ['data_files_path']=parser['DEFAULT_WINDOWS']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_WINDOWS']['config_path']
+        os.environ['db_host']=parser['DEFAULT_WINDOWS']['db_host']
+        os.environ['db_port']=parser['DEFAULT_WINDOWS']['db_port']
+        os.environ['db_username']=parser['DEFAULT_WINDOWS']['db_username']
+        os.environ['db_password']=parser['DEFAULT_WINDOWS']['db_password']
+        os.environ['host']=parser['DEFAULT_WINDOWS']['host']
+        os.environ['port']=parser['DEFAULT_WINDOWS']['port']
+
+    os.environ['db_name']=parser['DEFAULT']['db_name']
+    os.environ['data_files_pattern']=parser['DEFAULT']['data_files_pattern']
+
+    print("data_files_path ", os.environ['data_files_path'])
+    print("data_file_pattern ", os.environ['data_files_pattern'])
+
+    print("config_path ", os.environ['config_path'])
+    print("db_host ", os.environ['db_host'])
+    print("db_port ", os.environ['db_port'])
+    print("db_name ", os.environ['db_name'])
+    return "<h1>Poultry rates api initialized</h1>"
 
 @app.route('/api/v1/resources/tweets/all', methods=['GET'])
 def fetch_unlabel_tweet():

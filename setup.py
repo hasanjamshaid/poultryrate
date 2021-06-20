@@ -46,7 +46,7 @@ setup(
 
     zip_safe=False,
     entry_points={
-        'console_scripts': ['poultryrate=poultryrate.entry_points:main'],
+        'console_scripts': ['poultryrate=poultryrate.poultry_rate_tasks:main'],
     },
     classifiers=[
         'Development Status :: 4 - Beta',

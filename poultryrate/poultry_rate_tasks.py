@@ -30,33 +30,15 @@ from sys import platform
 
 os.environ['build_mode'] = 'release' ### debug or release
 
-#db_host="hasanjamshaid.mysql.pythonanywhere-services.com"
-#db_username="hasanjamshaid"
-#db_password="kNvHn434dQDaWgJe"
-#db_name="hasanjamshaid$poultry_rates_db"
-
-
-    
-#db_host="smartfarmdb.cldvyav9mexp.us-east-1.rds.amazonaws.com"
-#db_username="admin"
-#db_password="4w0pqsMWkZsXi4Piuk4L"
-#db_name="twint" 
- 
-#db_host="127.0.0.1"
-#db_username="root"
-#db_password="root"
-#db_name="twint"
-
-app = flask.Flask(__name__)
-
 def main() -> None:
-    parser = configparser.ConfigParser()
 
+    parser = configparser.ConfigParser()
+    print('Hello World')	
     #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
     ini_path = os.path.join('poultryrate','poultryrate.cfg')
     
     print(ini_path)
-    parser.read(ini_path)
+    parser.read('poultryrate.cfg')
 
     print ("os detected ", platform)
 
@@ -117,13 +99,8 @@ def main() -> None:
                 time.sleep(1)
     except IndexError:
         RuntimeError('please supply a command for py_pkg - e.g. install.')
-    return None
 
 
-    #if __name__ == "poultryrate.entry_points":
-    print("name ", __name__)
-    
-    
     return None
 
 def job_fetch_tweet_using_twint():
@@ -164,98 +141,5 @@ def job_translate_tweets():
     print("job_translate_tweets")
     data_model_obj=data_model()
     data_model_obj.translate_unprocessed_tweet()
-
-
-
-
-
-
-@app.route('/', methods=['GET'])
-def home():
-    return '''<h1>Poultry rates api</h1>
-<p>A prototype API for fetching poultry rate.</p>'''
-
-@app.route('/api/v1/resources/tweets/all', methods=['GET'])
-def fetch_unlabel_tweet():
-    tweets = pd.DataFrame()
-    sqlEngine = create_engine(db_url, pool_recycle=3600)
-    dbConnection = sqlEngine.connect()
-
-    try:
-        tweets = pd.read_sql("SELECT * FROM tweets_table "+
-        " where label='doc_rate' limit 1", dbConnection)
-    except ValueError as vx:
-        print(vx)
-    except Exception as ex:   
-        print(ex)
-    else:
-        print("SELECT * FROM tweets_table where label='' limit 1")   
-    finally:
-        dbConnection.close()
-    tweets.set_index("id",inplace=True)
-
-    return tweets.to_json(orient='index', index=True)
-
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return "<h1>404</h1><p>The resource could not be found.</p>", 404
-
-
-@app.route('/api/v1/resources/tweets', methods=['GET'])
-def api_tweets():
-    query_parameters = request.args
-
-    page = int(query_parameters.get('page'))
-
-    page_size = 20
-    start_limit = (page-1) * page_size
-    end_limit= start_limit + page_size
-    
-    query = "SELECT id, created_at, tweet, link, translate_english, translate_urdu, label, cities " + \
-            " FROM tweets_table WHERE processed=1 order by created_at desc limit "+ str(start_limit) + "," + str(end_limit)
-    
-    sqlEngine = create_engine(db_url, pool_recycle=3600)
-    dbConnection = sqlEngine.connect()
-
-    tweets = pd.DataFrame()
-    try:
-        tweets = pd.read_sql(query, dbConnection)
-    except ValueError as vx:
-        print(vx)
-    except Exception as ex:   
-        print(ex)
-    else:
-        print(query)   
-    finally:
-        dbConnection.close()
-    #tweets.set_index("id",inplace=True)
-    return tweets.to_json(orient='records', date_format='iso')
-
-
-@app.route('/api/v1/resources/<method>', methods=['GET'])
-def api_generic_filter(method):
-    #url = request.path
-    query_parameters = request.args
-
-    id = query_parameters.get('id')
-    city = query_parameters.get('city')
-    start_date = query_parameters.get('start_date')
-    end_date = query_parameters.get('end_date')
-    tweet_id = query_parameters.get('tweet_id')
-    days_ago = query_parameters.get('days_ago')
-    
-    data_model_obj=data_model()
-    tweets=data_model_obj.fetch_rates(method,id,city,start_date,end_date,tweet_id,days_ago)
-
-    if tweets is None or len(tweets) == 0:
-        return page_not_found(404)
-        
-    tweets["duration"]=tweets["date"]-pd.Timestamp.now()
-
-    tweets.set_index("id",inplace=True)
-    #return tweets.to_json(orient='index', index=True, date_format='iso')
-    return tweets.to_json(orient='records', date_format='iso')
-
 
 
