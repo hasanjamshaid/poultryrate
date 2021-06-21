@@ -754,3 +754,29 @@ class data_model() :
             print(ex)   
         finally:
             dbConnection.close()
+    
+    
+    def latest_tweets_feed(self, page):
+        page_size = 20
+        start_limit = (page-1) * page_size
+        end_limit= start_limit + page_size        
+        
+        query = "SELECT id, created_at, tweet, link, translate_english, translate_urdu, label, cities " + \
+                " FROM tweets_table WHERE processed=1 order by created_at desc limit "+ str(start_limit) + "," + str(end_limit)
+        
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        tweets = pd.DataFrame()
+        try:
+            tweets = pd.read_sql(query, dbConnection)
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex)
+        else:
+            print(query)   
+        finally:
+            dbConnection.close()
+        #tweets.set_index("id",inplace=True)
+        return tweets
