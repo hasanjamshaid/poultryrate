@@ -24,6 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+docs/
 MANIFEST
 
 # PyInstaller
@@ -113,3 +114,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#vs workspace
+*.code-workspace
