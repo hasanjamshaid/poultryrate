@@ -29,6 +29,7 @@ import pandas as pd
 from sys import platform
 
 os.environ['build_mode'] = 'release' ### debug or release
+os.environ['TWINT_DEBUG'] = 'debug'
 
 def main() -> None:
 
@@ -89,7 +90,7 @@ def main() -> None:
 
 
     try:
-            schedule.every(10).minutes.do(job_fetch_tweet_using_twint) ## not below 1 minute
+            schedule.every(1).minutes.do(job_fetch_tweet_using_twint) ## not below 1 minute
             schedule.every(0.1).minutes.do(job_read_tweet_csv)
             schedule.every(0.1).minutes.do(job_classify_tweet)
             schedule.every(0.1).minutes.do(job_translate_tweets)
@@ -104,24 +105,26 @@ def main() -> None:
     return None
 
 def job_fetch_tweet_using_twint():
-    time15minago=(datetime.datetime.now() - datetime.timedelta(days=1, minutes = 1))
-    print("running job ", time15minago)
+    
+    time_since=(datetime.datetime.now() - datetime.timedelta(days=0, minutes = 10))
+    time_until=datetime.datetime.now()
+    print("running job ", time_since)
     print("current time",datetime.datetime.now())
-    current_time = time15minago.strftime(f"%Y-%m-%d %H:%M:%S")
-    current_timestamp = time15minago.strftime(f"%Y%m%d%H%M%S")
+    current_timestamp = time_since.strftime(f"%Y%m%d%H%M%S")
     c = twint.Config()
-    c.Username = "Shahzadsaeed240"
-    c.Limit = 100
+    #c.Username = "Shahzadsaeed240"
+    c.User_id = "3723347053"
+    c.Limit = 1000
     c.Store_csv = True
     c.Output = os.environ['data_files_path']+ "file"+current_timestamp+".csv"
-    c.Since = current_time
+    c.Since = time_since.strftime(f"%Y-%m-%d %H:%M:%S")
 	#c.Since = "2021-01-20 00:00:00"
-	#c.Until = "2021-01-30 00:00:00"
-    c.Show_hashtags = True
-    c.Show_cashtags = True
-    c.Stats = True
-    c.Debug = True
-    c.Pandas = True
+    c.Until = time_until.strftime(f"%Y-%m-%d %H:%M:%S")
+    #c.Show_hashtags = True
+    #c.Show_cashtags = True
+    #c.Stats = True
+    #c.Debug = True
+    #c.Pandas = True
     try:
         twint.run.Search(c)
     except:
