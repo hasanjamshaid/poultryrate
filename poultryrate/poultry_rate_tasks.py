@@ -89,7 +89,7 @@ def main() -> None:
 
 
     try:
-            schedule.every(1).minutes.do(job_fetch_tweet_using_twint) ## not below 1 minute
+            schedule.every(10).minutes.do(job_fetch_tweet_using_twint) ## not below 1 minute
             schedule.every(0.1).minutes.do(job_read_tweet_csv)
             schedule.every(0.1).minutes.do(job_classify_tweet)
             schedule.every(0.1).minutes.do(job_translate_tweets)
@@ -104,8 +104,9 @@ def main() -> None:
     return None
 
 def job_fetch_tweet_using_twint():
-    time15minago=(datetime.datetime.now() - datetime.timedelta(minutes = 60))
+    time15minago=(datetime.datetime.now() - datetime.timedelta(days=1, minutes = 1))
     print("running job ", time15minago)
+    print("current time",datetime.datetime.now())
     current_time = time15minago.strftime(f"%Y-%m-%d %H:%M:%S")
     current_timestamp = time15minago.strftime(f"%Y%m%d%H%M%S")
     c = twint.Config()
