@@ -634,7 +634,7 @@ class data_model() :
                 data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
 
         elif single_tweet["label"][0] ==  "farm_rate" :
-            print("farm rate")
+            print("translate farm rate")
             dataframe=data_model_obj.fetch_rates("farmrate", tweet_id=single_tweet["id"][0])
             print(single_tweet["tweet"][0])
 
@@ -646,6 +646,8 @@ class data_model() :
             count=dataframe["english_name"].count()
             unique=len(dataframe["english_name"].unique())
 
+            print("cities names")
+            print(dataframe["english_name"])
             if count > unique:
                 print("multiple farm rate rows")
                 max=dataframe["farm_rate"].max()
