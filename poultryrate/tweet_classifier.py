@@ -378,7 +378,7 @@ class tweet_classifier():
                 data_model_obj.insert_farm_rate(
                     self.tweet_summary.date[0]+" "+self.tweet_summary.time[0],
                     partial_cityframe.iloc[0][0],
-                    partial_farm_rate_df.iloc[0],
+                    partial_farm_rate_df.iloc[0][0],
                     int(self.tweet_summary.id[0])
                     )
                 print("partial farm rate " , partial_cityframe.iloc[0],

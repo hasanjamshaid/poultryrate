@@ -195,12 +195,13 @@ class data_model() :
         dbConnection = sqlEngine.connect()
 
         single_tweet = pd.DataFrame()
+        query="SELECT * FROM farm_rate_table where"+\
+            " date like '"+str(var_date[0:10])+"%%' "+\
+            " and city='"+var_city.capitalize()+"' "+\
+            " and farm_rate="+ str(var_rate)+" "
+        print(query)
         try:
-            single_tweet = pd.read_sql("SELECT * FROM farm_rate_table where"
-            +" date like '"+var_date[0:10]+"%%' "
-            +" and city='"+var_city.capitalize()+"' "
-            +" and farm_rate="+ str(var_rate)+" "
-            , dbConnection)
+            single_tweet = pd.read_sql(query, dbConnection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
