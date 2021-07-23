@@ -1,0 +1,2995 @@
+db_host=parser['DEFAULT_LINUX']['db_host']
+db_port=parser['DEFAULT_LINUX']['db_port']
+db_username=parser['DEFAULT_LINUX']['db_username']
+db_password=parser['DEFAULT_LINUX']['db_password']
+host=parser['DEFAULT_LINUX']['host']
+port=parser['DEFAULT_LINUX']['port']
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table where"
+    +" date like '"+var_date[0:10]+"%%' "
+    +" and city='"+var_city.capitalize()+"' "
+    +" and breeder_culling_rate="+ str(var_rate)+" "
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host=127.0.0.1
+db_port=3306
+db_username=root
+db_password=root
+host=192.168.18.61
+port=5000
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table where"
+    +" date like '"+var_date[0:10]+"%%' "
+    +" and city='"+var_city.capitalize()+"' "
+    +" and breeder_culling_rate="+ str(var_rate)+" "
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table where"
+    +" date like '"+var_date[0:10]+"%%' "
+    +" and city='"+var_city.capitalize()+"' "
+    +" and breeder_culling_rate="+ str(var_rate)+" "
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table where"
+    +" date like '"+var_date[0:10]+"%%' "
+    +" and city='"+var_city.capitalize()+"' "
+    +" and breeder_culling_rate="+ str(var_rate)+" "
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table where"
+    +" date like '"+var_date[0:10]+"%%' "
+    +" and city='"+var_city.capitalize()+"' "
+    +" and breeder_culling_rate="+ str(var_rate)+" "
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM breeder_rate_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+single_tweet
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "date": var_date, 
+        "first_name": var_city.capitalize(),
+        "last_name": var_rate,
+        "gender": var_tweet_id
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "first_name": var_city.capitalize(),
+        "last_name": var_rate,
+        "gender": var_tweet_id
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="18-10-1986"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="18-10-1986"
+preferred_language="English"
+profession="farmer"
+mobile_number=923335533253
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "id": mobile_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="18-10-1986"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "id": mobile_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="18-10-1986"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "id": mobile_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "date_of_birth":date_of_birth
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="1986-10-18"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "id": mobile_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "date_of_birth":date_of_birth
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="1986-10-18"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "id": mobile_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "date_of_birth":date_of_birth,
+        "preferred_language": preferred_language,
+        
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="1986-10-18"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_breeder_rate_table = insert(user_table).values({
+        "id": mobile_number,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "date_of_birth":date_of_birth,
+        "preferred_language": preferred_language,
+        
+    })
+
+    dbConnection.execute(insert_breeder_rate_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+#insert user information
+id=123123123
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="1986-10-18"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_table).values({
+        "id": id,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "date_of_birth":date_of_birth,
+        "preferred_language": preferred_language,
+        "mobile_number": mobile_number
+
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+# select user using id
+user_id="923335533253"
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table where id="+user_id
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+# select user using id
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table where id="+user_id
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+# select user using id
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+#select preferences
+# select user using id
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#insert preferred city
+id=123123123
+city_1="Rawalpindi"
+city_2="Lahore"
+city_3="Sargodha"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": city_1,
+        "city_2": city_2,
+        "city_3": city_3
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#insert preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha"]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#insert preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = update(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = update(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = update(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = update(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.on_duplicate_key_update(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = on_duplicate_key_update(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+        updated_at=current_timestamp())
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        data=insert_user_table.inserted.data,
+        updated_at=current_timestamp())
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy.dialects.mysql import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        data=insert_user_table.inserted.data,
+        updated_at=current_timestamp())
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+import pandas as pd
+from sqlalchemy import create_engine
+from sqlalchemy import MetaData
+from sqlalchemy import Table
+from sqlalchemy import Column
+from sqlalchemy import Integer, String
+from sqlalchemy.dialects.mysql import insert
+from sqlalchemy import delete
+from sqlalchemy import update
+from sqlalchemy.engine.url import URL
+from sqlalchemy.types import BIGINT
+from datetime import datetime, timedelta
+
+db_host="127.0.0.1"
+db_port="3306"
+db_name="twint"
+db_username="root"
+db_password="root"
+host="192.168.18.61"
+port="5000"
+        
+driver="mysql"
+db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
+
+#echo=False, connect_args={'ssl': {'activate': True}}
+sqlEngine = create_engine(db_url, pool_recycle=3600, encoding="utf8")
+
+dbConnection = sqlEngine.connect()
+
+single_tweet = pd.DataFrame()
+
+try:
+    single_tweet = pd.read_sql("SELECT * FROM user_table limit 1,1"
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+single_tweet
+#insert user information
+id=123123123
+first_name="Hasan"
+last_name="Jamshaid"
+gender="Male"
+date_of_birth="1986-10-18"
+preferred_language="English"
+profession="farmer"
+mobile_number="923335533253"
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_table = Table('user_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_table).values({
+        "id": id,
+        "first_name": first_name,
+        "last_name": last_name,
+        "gender": gender,
+        "date_of_birth":date_of_birth,
+        "preferred_language": preferred_language,
+        "mobile_number": mobile_number
+
+    })
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+# select user using id
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        data=insert_user_table.inserted.data,
+        updated_at=current_timestamp())
+
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        data=insert_user_table.inserted.data,
+        updated_at=current_timestamp())
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        data=insert_user_table.inserted.data,
+        updated_at=current_timestamp())
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.values
+        updated_at=current_timestamp())
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.values,
+        updated_at=current_timestamp())
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.values)
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.values)
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.values)
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_conflict_do_update(
+        insert_user_table.
+        values=insert_user_table.values)
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_conflict_do_update(
+        values=insert_user_table.values)
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_stmt(
+        values=insert_user_table.values
+        )
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+        values=insert_user_table.values
+        })
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+        })
+    
+    print(insert_user_table)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+        })
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.inserted.values)
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(insert_user_table)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        values=insert_user_table.inserted.values)
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","Karachi",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#update preferred city
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#insert or update preferred cities list; only 5 cities in preferred list
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha"]
+cities.append("","","","")
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#insert or update preferred cities list; only 5 cities in preferred list
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha"]
+cities.append(["","","",""])
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#insert or update preferred cities list; only 5 cities in preferred list
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha"]
+cities=cities + ["","","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#insert or update preferred cities list; only 5 cities in preferred list
+id=123123123
+cities=["Rawalpindi", "Lahore", "Sargodha"]
+cities=cities + ["","","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#insert or update preferred cities list; only 5 cities in preferred list
+id=123123123
+cities=["Rawalpindi"]
+cities=cities + ["","","",""]
+
+dbConnection = sqlEngine.connect()
+
+try:
+    metadata = MetaData(bind=sqlEngine)
+    user_preferences_table = Table('user_preferences_table', metadata, autoload=True)
+    # insert data via insert() construct
+    # insert
+    insert_user_table = insert(user_preferences_table).values({
+        "id": id,
+        "city_1": cities[0],
+        "city_2": cities[1],
+        "city_3": cities[2],
+        "city_4": cities[3],
+        "city_5": cities[4],
+    })
+    print(insert_user_table)
+    on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+        {
+            "city_1": cities[0],
+            "city_2": cities[1],
+            "city_3": cities[2],
+            "city_4": cities[3],
+            "city_5": cities[4]         
+        }
+    )
+    
+    print(on_duplicate_key_stmt)
+    dbConnection.execute(on_duplicate_key_stmt)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:
+    print(ex)
+else:
+    dbConnection.close()
+#select preferences
+user_id=123123123
+dbConnection = sqlEngine.connect()
+single_tweet = pd.DataFrame()
+
+try:
+    user = pd.read_sql("SELECT * FROM user_preferences_table where id="+str(user_id)
+    , dbConnection)
+except ValueError as vx:
+    print(vx)
+except Exception as ex:   
+    print(ex) 
+finally:
+    dbConnection.close()
+
+user
+#flask services
+from os import remove
+from poultryrate.data_model import data_model
+from poultryrate.tweet_classifier import tweet_classifier
+from poultryrate.csv_reader import csv_reader
+from flask import request, jsonify
+from flask_sslify import SSLify
+from sys import argv
+from zipfile import ZipFile
+from sqlalchemy import create_engine
+from datetime import datetime, timedelta
+import configparser
+
+import requests
+import time
+import twint
+import schedule
+import os
+import datetime
+import flask
+import pandas as pd
+from sys import platform
+
+os.environ['build_mode'] = 'debug' ### debug or release
+
+app = flask.Flask(__name__)
+
+def main() -> None:
+    parser = configparser.ConfigParser()
+
+    #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
+    ini_path = os.path.join('poultryrate.cfg')
+    
+    print(ini_path)
+    parser.read('poultryrate.cfg')
+
+    print ("os detected ", platform)
+
+    if platform == "linux" or platform == "linux2":
+        # linux
+        os.environ['data_files_path']=parser['DEFAULT_LINUX']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_LINUX']['config_path']
+        os.environ['db_host']=parser['DEFAULT_LINUX']['db_host']
+        os.environ['db_port']=parser['DEFAULT_LINUX']['db_port']
+        os.environ['db_username']=parser['DEFAULT_LINUX']['db_username']
+        os.environ['db_password']=parser['DEFAULT_LINUX']['db_password']
+        os.environ['host']=parser['DEFAULT_LINUX']['host']
+        os.environ['port']=parser['DEFAULT_LINUX']['port']
+
+    elif platform == "darwin":
+        # OS X
+        os.environ['data_path']=parser['DARWIN_DEFAULT']['data_path']
+        os.environ['config_path']=parser['DARWIN_DEFAULT']['config_path']        
+    elif platform == "win32":
+        # Windows...
+        os.environ['data_files_path']=parser['DEFAULT_WINDOWS']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_WINDOWS']['config_path']
+        os.environ['db_host']=parser['DEFAULT_WINDOWS']['db_host']
+        os.environ['db_port']=parser['DEFAULT_WINDOWS']['db_port']
+        os.environ['db_username']=parser['DEFAULT_WINDOWS']['db_username']
+        os.environ['db_password']=parser['DEFAULT_WINDOWS']['db_password']
+        os.environ['host']=parser['DEFAULT_WINDOWS']['host']
+        os.environ['port']=parser['DEFAULT_WINDOWS']['port']
+
+    os.environ['db_name']=parser['DEFAULT']['db_name']
+    os.environ['data_files_pattern']=parser['DEFAULT']['data_files_pattern']
+
+    print("data_files_path ", os.environ['data_files_path'])
+    print("data_file_pattern ", os.environ['data_files_pattern'])
+
+    print("config_path ", os.environ['config_path'])
+    print("db_host ", os.environ['db_host'])
+    print("db_port ", os.environ['db_port'])
+    print("db_name ", os.environ['db_name'])
+
+        
+    '''Main package entry point.
+
+    Delegates to other functions based on user input.
+    '''
+
+    #job_classify_tweet()
+
+
+    try:
+            app.run(host=os.environ['host'], port=os.environ['port'])
+    except IndexError:
+        RuntimeError('please supply a command for py_pkg - e.g. install.')
+    return None
+
+
+    #if __name__ == "poultryrate.entry_points":
+    print("name ", __name__)
+    
+    
+    return None
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+#flask services
+from os import remove
+from poultryrate.data_model import data_model
+from poultryrate.tweet_classifier import tweet_classifier
+from poultryrate.csv_reader import csv_reader
+from flask import request, jsonify
+from flask_sslify import SSLify
+from sys import argv
+from zipfile import ZipFile
+from sqlalchemy import create_engine
+from datetime import datetime, timedelta
+import configparser
+
+import requests
+import time
+import twint
+import schedule
+import os
+import datetime
+import flask
+import pandas as pd
+from sys import platform
+
+os.environ['build_mode'] = 'debug' ### debug or release
+
+app = flask.Flask(__name__)
+
+def main() -> None:
+    parser = configparser.ConfigParser()
+
+    #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
+    ini_path = os.path.join('poultryrate.cfg')
+    
+    print(ini_path)
+    parser.read('poultryrate.cfg')
+
+    print ("os detected ", platform)
+
+    if platform == "linux" or platform == "linux2":
+        # linux
+        os.environ['data_files_path']=parser['DEFAULT_LINUX']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_LINUX']['config_path']
+        os.environ['db_host']=parser['DEFAULT_LINUX']['db_host']
+        os.environ['db_port']=parser['DEFAULT_LINUX']['db_port']
+        os.environ['db_username']=parser['DEFAULT_LINUX']['db_username']
+        os.environ['db_password']=parser['DEFAULT_LINUX']['db_password']
+        os.environ['host']=parser['DEFAULT_LINUX']['host']
+        os.environ['port']=parser['DEFAULT_LINUX']['port']
+
+    elif platform == "darwin":
+        # OS X
+        os.environ['data_path']=parser['DARWIN_DEFAULT']['data_path']
+        os.environ['config_path']=parser['DARWIN_DEFAULT']['config_path']        
+    elif platform == "win32":
+        # Windows...
+        os.environ['data_files_path']=parser['DEFAULT_WINDOWS']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_WINDOWS']['config_path']
+        os.environ['db_host']=parser['DEFAULT_WINDOWS']['db_host']
+        os.environ['db_port']=parser['DEFAULT_WINDOWS']['db_port']
+        os.environ['db_username']=parser['DEFAULT_WINDOWS']['db_username']
+        os.environ['db_password']=parser['DEFAULT_WINDOWS']['db_password']
+        os.environ['host']=parser['DEFAULT_WINDOWS']['host']
+        os.environ['port']=parser['DEFAULT_WINDOWS']['port']
+
+    os.environ['db_name']=parser['DEFAULT']['db_name']
+    os.environ['data_files_pattern']=parser['DEFAULT']['data_files_pattern']
+
+    print("data_files_path ", os.environ['data_files_path'])
+    print("data_file_pattern ", os.environ['data_files_pattern'])
+
+    print("config_path ", os.environ['config_path'])
+    print("db_host ", os.environ['db_host'])
+    print("db_port ", os.environ['db_port'])
+    print("db_name ", os.environ['db_name'])
+
+        
+    '''Main package entry point.
+
+    Delegates to other functions based on user input.
+    '''
+
+    #job_classify_tweet()
+
+
+    try:
+            app.run(host=os.environ['host'], port=os.environ['port'])
+    except IndexError:
+        RuntimeError('please supply a command for py_pkg - e.g. install.')
+    return None
+
+
+    #if __name__ == "poultryrate.entry_points":
+    print("name ", __name__)
+    
+    
+    return None
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+#flask services
+from os import remove
+from poultryrate.data_model import data_model
+from poultryrate.tweet_classifier import tweet_classifier
+from poultryrate.csv_reader import csv_reader
+from flask import request, jsonify
+from flask_sslify import SSLify
+from sys import argv
+from zipfile import ZipFile
+from sqlalchemy import create_engine
+from datetime import datetime, timedelta
+import configparser
+
+import requests
+import time
+import twint
+import schedule
+import os
+import datetime
+import flask
+import pandas as pd
+from sys import platform
+
+os.environ['build_mode'] = 'debug' ### debug or release
+
+app = flask.Flask(__name__)
+
+def main() -> None:
+    parser = configparser.ConfigParser()
+
+    #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
+    ini_path = os.path.join('poultryrate.cfg')
+    
+    print(ini_path)
+    parser.read('poultryrate.cfg')
+
+    print ("os detected ", platform)
+
+    if platform == "linux" or platform == "linux2":
+        # linux
+        os.environ['data_files_path']=parser['DEFAULT_LINUX']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_LINUX']['config_path']
+        os.environ['db_host']=parser['DEFAULT_LINUX']['db_host']
+        os.environ['db_port']=parser['DEFAULT_LINUX']['db_port']
+        os.environ['db_username']=parser['DEFAULT_LINUX']['db_username']
+        os.environ['db_password']=parser['DEFAULT_LINUX']['db_password']
+        os.environ['host']=parser['DEFAULT_LINUX']['host']
+        os.environ['port']=parser['DEFAULT_LINUX']['port']
+
+    elif platform == "darwin":
+        # OS X
+        os.environ['data_path']=parser['DARWIN_DEFAULT']['data_path']
+        os.environ['config_path']=parser['DARWIN_DEFAULT']['config_path']        
+    elif platform == "win32":
+        # Windows...
+        os.environ['data_files_path']=parser['DEFAULT_WINDOWS']['data_files_path']
+        os.environ['config_path']=parser['DEFAULT_WINDOWS']['config_path']
+        os.environ['db_host']=parser['DEFAULT_WINDOWS']['db_host']
+        os.environ['db_port']=parser['DEFAULT_WINDOWS']['db_port']
+        os.environ['db_username']=parser['DEFAULT_WINDOWS']['db_username']
+        os.environ['db_password']=parser['DEFAULT_WINDOWS']['db_password']
+        os.environ['host']=parser['DEFAULT_WINDOWS']['host']
+        os.environ['port']=parser['DEFAULT_WINDOWS']['port']
+
+    os.environ['db_name']=parser['DEFAULT']['db_name']
+    os.environ['data_files_pattern']=parser['DEFAULT']['data_files_pattern']
+
+    print("data_files_path ", os.environ['data_files_path'])
+    print("data_file_pattern ", os.environ['data_files_pattern'])
+
+    print("config_path ", os.environ['config_path'])
+    print("db_host ", os.environ['db_host'])
+    print("db_port ", os.environ['db_port'])
+    print("db_name ", os.environ['db_name'])
+
+        
+    '''Main package entry point.
+
+    Delegates to other functions based on user input.
+    '''
+
+    #job_classify_tweet()
+
+
+    try:
+            app.run(host=os.environ['host'], port=os.environ['port'])
+    except IndexError:
+        RuntimeError('please supply a command for py_pkg - e.g. install.')
+    return None
+
+
+    #if __name__ == "poultryrate.entry_points":
+    print("name ", __name__)
+    
+    
+    return None
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+#flask services
+from os import remove
+from poultryrate.data_model import data_model
+from poultryrate.tweet_classifier import tweet_classifier
+from poultryrate.csv_reader import csv_reader
+from flask import request, jsonify
+from flask_sslify import SSLify
+from sys import argv
+from zipfile import ZipFile
+from sqlalchemy import create_engine
+from datetime import datetime, timedelta
+import configparser
+
+import requests
+import time
+import twint
+import schedule
+import os
+import datetime
+import flask
+import pandas as pd
+from sys import platform
+
+os.environ['build_mode'] = 'debug' ### debug or release
+
+app = flask.Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def home():
+    try:
+        app.run(host="127.0.0.1", port="5000")
+    except IndexError:
+        RuntimeError('please supply a command for py_pkg - e.g. install.')
+    return None
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+#flask services
+from os import remove
+from poultryrate.data_model import data_model
+from poultryrate.tweet_classifier import tweet_classifier
+from poultryrate.csv_reader import csv_reader
+from flask import request, jsonify
+from flask_sslify import SSLify
+from sys import argv
+from zipfile import ZipFile
+from sqlalchemy import create_engine
+from datetime import datetime, timedelta
+import configparser
+
+import requests
+import time
+import twint
+import schedule
+import os
+import datetime
+import flask
+import pandas as pd
+from sys import platform
+
+os.environ['build_mode'] = 'debug' ### debug or release
+
+app = flask.Flask(__name__)
+
+try:
+    app.run(host="127.0.0.1", port="5000")
+except IndexError:
+    RuntimeError('please supply a command for py_pkg - e.g. install.')
+    
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+#flask services
+from os import remove
+from poultryrate.data_model import data_model
+from poultryrate.tweet_classifier import tweet_classifier
+from poultryrate.csv_reader import csv_reader
+from flask import request, jsonify
+from flask_sslify import SSLify
+from sys import argv
+from zipfile import ZipFile
+from sqlalchemy import create_engine
+from datetime import datetime, timedelta
+import configparser
+
+import requests
+import time
+import twint
+import schedule
+import os
+import datetime
+import flask
+import pandas as pd
+from sys import platform
+
+os.environ['build_mode'] = 'debug' ### debug or release
+
+app = flask.Flask(__name__)
+
+@app.route('/', methods=['GET'])
+def home():
+    return "<h1>Poultry rates api</h1><p>A prototype API for fetching poultry rate.</p>"
+    
+try:
+    app.run(host="127.0.0.1", port="5000")
+except IndexError:
+    RuntimeError('please supply a command for py_pkg - e.g. install.')

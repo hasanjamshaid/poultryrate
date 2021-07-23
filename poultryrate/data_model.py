@@ -18,29 +18,8 @@ class data_model() :
 
 
     def create_connection(self):
-
-        #parser = configparser.ConfigParser()
-        #ini_path = os.path.join(os.getcwd(), 'poultryrate','poultryrate.cfg')
-        #print(ini_path)
-        #parser.read(ini_path)
-
-    
-        #os.environ['data_path']=parser['DEFAULT']['data_path']
-        #os.environ['config_path']=parser['DEFAULT']['config_path']
-        #os.environ['db_host']=parser['DEFAULT']['db_host']
-        #os.environ['db_port']=parser['DEFAULT']['db_port']
-        #os.environ['db_username']=parser['DEFAULT']['db_username']
-        #os.environ['db_password']=parser['DEFAULT']['db_password']
-        #os.environ['db_name']=parser['DEFAULT']['db_name']
-
-        #os.environ['host']=parser['DEFAULT']['host']
-        #os.environ['port']=parser['DEFAULT']['port']
-
         driver="mysql"
         self.db_url="mysql+pymysql://"+os.environ['db_username']+":"+os.environ['db_password']+"@"+os.environ['db_host']+"/"+os.environ['db_name']
-        #self.db_url=URL(driver, os.environ['db_username'], os.environ['db_password'], os.environ['db_host'], os.environ['db_port'], os.environ['db_name'])
-
-        #echo=False, connect_args={'ssl': {'activate': True}}
         sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
         return sqlEngine
 
@@ -146,13 +125,15 @@ class data_model() :
 
         single_tweet = pd.DataFrame()
         try:
-            single_tweet = pd.read_sql("SELECT * FROM egg_rate_table where"
-            +" date like '"+var_date[0:10]+"%%' "
-            +" and city='"+var_city.capitalize()+"' "
-            +" and egg_cage_rate="+ str(var_cage_rate)+" "
-            +" and egg_floor_rate="+ str(var_floor_rate)+" "
-            +" and egg_starter_rate="+ str(var_starter_rate)+" "
-            , dbConnection)
+            query="SELECT * FROM egg_rate_table where" +\
+            " date like '"+var_date[0:10]+"%%' "+\
+            " and city='"+var_city.capitalize()+"' "+\
+            " and egg_cage_rate="+ str(var_cage_rate)+" "+\
+            " and egg_floor_rate="+ str(var_floor_rate)+" "+\
+            " and egg_starter_rate="+ str(var_starter_rate)+" "
+            print(query)
+            single_tweet = pd.read_sql(query, dbConnection)
+
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
@@ -161,7 +142,7 @@ class data_model() :
             dbConnection.close()
 
         if len(single_tweet) > 0 :
-            print("doc rate already found")
+            print("egg rate already found")
             return
 
         sqlEngine = self.create_connection()
@@ -690,6 +671,7 @@ class data_model() :
                 urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " کیج ریٹ "  +" "+ str(dataframe["layer_culling_cage_rate"][i])
                 urdu_tweet +="\n"+  dataframe["urdu_name"][i] + " فلور ریٹ "+" "+ str(dataframe["layer_culling_floor_rate"][i]) 
                 cities += dataframe["english_name"][i] + "\n"            
+
             print(english_tweet)
             print(urdu_tweet)
 
@@ -718,6 +700,30 @@ class data_model() :
                 data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, )
             else:
                 data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
+        elif single_tweet["label"][0] ==  "breeder_rate" :
+            print("breeder rate")
+            data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
+            dataframe=data_model_obj.fetch_rates("breederrate", tweet_id=single_tweet["id"][0])
+            print(single_tweet["tweet"][0])
+            english_tweet="TODAY BREEDER CULLING PER KG RATE"
+            urdu_tweet = "آج بریڈر تلف ریٹ فی کلو"
+            cities=""    
+
+            for i in range(len(dataframe)):
+                english_tweet +="\n"+ dataframe.iloc[i,dataframe.columns.get_loc('english_name')] + \
+                " " + str(dataframe.iloc[i, dataframe.columns.get_loc('breeder_culling_rate')]) 
+                urdu_tweet +="\n"+ dataframe.iloc[i, dataframe.columns.get_loc("urdu_name")] + \
+                " " + str(dataframe.iloc[i, dataframe.columns.get_loc("breeder_culling_rate")])
+                cities += dataframe.iloc[i, dataframe.columns.get_loc("english_name")] + "\n"
+
+
+            print(english_tweet)
+            print(urdu_tweet)
+
+            if len(dataframe) > 0 :
+                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities)
+            else:
+                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)            
         elif single_tweet["label"][0] ==  "supply_rate" :
             print("supply rate")
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
@@ -726,9 +732,6 @@ class data_model() :
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
         elif single_tweet["label"][0] ==  "last_year" :
             print("last year")
-            data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
-        elif single_tweet["label"][0] ==  "breeder_rate" :
-            print("breeder rate")
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
         else :
             print(single_tweet["label"][0])

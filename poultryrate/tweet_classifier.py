@@ -339,11 +339,14 @@ class tweet_classifier():
                 tweet.at[row, "label"]="partial_layer_culling_rate"
 
             if self.tweet_summary.label[0] == "egg_rate" and tweet.at[row, "egg"] >= 1 and tweet.at[row,"words_egg_rate"] >= 1 and tweet.at[row,"numbers_len"] == 1:
-                print("egg rate row detected", tweet.at[row, "numbers"])
-                tweet.at[row, "label"]="egg_rate"
+                print("egg rate karachi row detected", tweet.at[row, "numbers"])
+                tweet.at[row, "label"]="egg_rate_karachi"
+            elif self.tweet_summary.label[0] == "egg_rate" and tweet.at[row,"words_egg_rate"] >= 1 and tweet.at[row,"cities_len"] >= 1 and tweet.at[row,"numbers_len"] >= 1:
+                print("egg rate punjab row detected", tweet.at[row, "numbers"])
+                tweet.at[row, "label"]="egg_rate_punjab"
             elif self.tweet_summary.label[0] == "egg_rate" and tweet.at[row,"words_egg_rate"] >= 1 and tweet.at[row,"numbers_len"] >= 1:
-                print("partial egg rate row detected", tweet.at[row, "numbers"])
-                tweet.at[row, "label"]="partial_egg_rate"
+                print("egg rate chakwal/sumundari row detected", tweet.at[row, "numbers"])
+                tweet.at[row, "label"]="egg_rate_chakwal"
 
             if self.tweet_summary.label[0] == "supply_rate" and tweet.at[row, "rooster"] >= 1 and tweet.at[row,"cities_len"] >= 1 and tweet.at[row,"numbers_len"] == 1:
                 print("supply row detected", tweet.at[row, "cities"], tweet.at[row, "numbers"])
@@ -438,12 +441,13 @@ class tweet_classifier():
                             layer_culling_rate_df.iloc[1]["numbers"][0],
                             int(self.tweet_summary.id[0]))
         elif self.tweet_summary.at[0,"label"] == "egg_rate" :            
-            partial_egg_rate_df=tweet[tweet.label == "partial_egg_rate"]
+            partial_egg_rate_df=tweet[tweet.label == "egg_rate_chakwal"]
 
             if len(partial_egg_rate_df)>0 :
                 city_list=self.tweet_summary.cities[0].replace("' '","','")
                 eval_city_list=eval(city_list)
-                eval_city_list.remove("punjab")
+                #if "punjab" in eval_city_list:
+                #    eval_city_list.remove("punjab")
                 
                 print("cities ", self.tweet_summary.cities[0])
                 print("city_list ", city_list)
@@ -451,7 +455,7 @@ class tweet_classifier():
                 print("partial_egg_rate_df ") 
                 print(partial_egg_rate_df.iloc[0]["numbers"][0])
                 print(partial_egg_rate_df.iloc[1]["numbers"][0])
-                print(partial_egg_rate_df.iloc[2]["numbers"][0])
+                print(partial_egg_rate_df.iloc[2]["numbers"][1])
 
                 for city in eval_city_list:
                         data_model_obj=data_model()
@@ -460,14 +464,14 @@ class tweet_classifier():
                             city,
                             partial_egg_rate_df.iloc[0]["numbers"][0],
                             partial_egg_rate_df.iloc[1]["numbers"][0],
-                            partial_egg_rate_df.iloc[2]["numbers"][0],
+                            partial_egg_rate_df.iloc[2]["numbers"][1],
                             int(self.tweet_summary.id[0]))
             
-            egg_rate_df=tweet[tweet.label == "egg_rate"]
+            egg_rate_df=tweet[tweet.label == "egg_rate_karachi"]
             if len(egg_rate_df)>0 :
                 for index, row in egg_rate_df.iterrows():
                     data_model_obj=data_model()
-                    #print("cities ", farm_rate_df.at[index, "cities"])
+                    print("cities ", egg_rate_df.at[index, "cities"])
                     #if(farm_rate_df.at[index, "cities_len"][0]>1)
                     for city in egg_rate_df.at[index, "cities"]:
                         data_model_obj.insert_egg_rate(
@@ -478,6 +482,22 @@ class tweet_classifier():
                             "0",
                             int(self.tweet_summary.id[0])
                             )
+            egg_rate_df=tweet[tweet.label == "egg_rate_punjab"]
+            if len(egg_rate_df)>0 :
+                for index, row in egg_rate_df.iterrows():
+                    data_model_obj=data_model()
+                    print("cities ", egg_rate_df.at[index, "cities"])
+                    #if(farm_rate_df.at[index, "cities_len"][0]>1)
+                    for city in egg_rate_df.at[index, "cities"]:
+                        data_model_obj.insert_egg_rate(
+                            self.tweet_summary.date[0]+" "+self.tweet_summary.time[0],
+                            city,
+                            egg_rate_df.at[index, "numbers"][1],
+                            "0",
+                            "0",
+                            int(self.tweet_summary.id[0])
+                            )
+
         elif self.tweet_summary.at[0,"label"] == "supply_rate" :
             
             var_date=self.tweet_summary.date

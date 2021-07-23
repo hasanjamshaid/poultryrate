@@ -28,8 +28,6 @@ import flask
 import pandas as pd
 from sys import platform
 
-os.environ['build_mode'] = 'release' ### debug or release
-os.environ['TWINT_DEBUG'] = 'debug'
 
 def main() -> None:
 
@@ -53,6 +51,8 @@ def main() -> None:
         os.environ['db_password']=parser['DEFAULT_LINUX']['db_password']
         os.environ['host']=parser['DEFAULT_LINUX']['host']
         os.environ['port']=parser['DEFAULT_LINUX']['port']
+        os.environ['build_mode']=parser['DEFAULT_LINUX']['mode']
+        os.environ['TWINT_DEBUG']=parser['DEFAULT_LINUX']['mode']     
 
     elif platform == "darwin":
         # OS X
@@ -68,6 +68,8 @@ def main() -> None:
         os.environ['db_password']=parser['DEFAULT_WINDOWS']['db_password']
         os.environ['host']=parser['DEFAULT_WINDOWS']['host']
         os.environ['port']=parser['DEFAULT_WINDOWS']['port']
+        os.environ['build_mode']=parser['DEFAULT_WINDOWS']['mode']
+        os.environ['TWINT_DEBUG']=parser['DEFAULT_WINDOWS']['mode']    
 
     os.environ['db_name']=parser['DEFAULT']['db_name']
     os.environ['data_files_pattern']=parser['DEFAULT']['data_files_pattern']
@@ -79,6 +81,9 @@ def main() -> None:
     print("db_host ", os.environ['db_host'])
     print("db_port ", os.environ['db_port'])
     print("db_name ", os.environ['db_name'])
+
+
+    print("logging mode ", os.environ['build_mode'])
 
         
     '''Main package entry point.

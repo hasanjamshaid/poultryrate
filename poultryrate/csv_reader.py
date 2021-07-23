@@ -2,7 +2,6 @@ import schedule
 import time
 import os
 import datetime
-os.environ['TWINT_DEBUG'] = 'debug'
 
 #Step 2: All tweets in file are stored in temporary table and ‘new’ tweets are moved to tweets table
 
