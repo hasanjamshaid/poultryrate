@@ -4,7 +4,7 @@ from sqlalchemy import MetaData
 from sqlalchemy import Table
 from sqlalchemy import Column
 from sqlalchemy import Integer, String
-from sqlalchemy import insert
+from sqlalchemy.dialects.mysql import insert
 from sqlalchemy import delete
 from sqlalchemy import update
 from sqlalchemy.engine.url import URL
@@ -14,9 +14,20 @@ import os
 import configparser
 
 class data_model() :
-
-
-
+    
+    #def create_connection(self):
+    #     db_host="smartfarmdb.cldvyav9mexp.us-east-1.rds.amazonaws.com"
+    #     db_port="admin"
+    #     db_name="twint"
+    #     db_username="admin"
+    #     db_password="4w0pqsMWkZsXi4Piuk4L"
+    #     host="192.168.18.61"
+    #     port="5000"
+    #     driver="mysql"
+    #     self.db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
+    #     sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+    #     return sqlEngine
+ 
     def create_connection(self):
         driver="mysql"
         self.db_url="mysql+pymysql://"+os.environ['db_username']+":"+os.environ['db_password']+"@"+os.environ['db_host']+"/"+os.environ['db_name']
@@ -360,7 +371,7 @@ class data_model() :
         else:
             dbConnection.close()
 
-    def fetch_rates(self, method, id=None, city=None, start_date=None, end_date=None, 
+    def fetch_rates(self, method, user_id=None, city=None, start_date=None, end_date=None, 
     tweet_id=None, days_ago=None):
         query ="SELECT * FROM city_table, "
         if "breederrate" in method:
@@ -380,9 +391,9 @@ class data_model() :
         query+="WHERE city = city_table.english_name AND "
         to_filter = {}
 
-        if id:
-            query += "id=%(id)s AND "
-            to_filter["id"]=id
+        if tweet_id:
+            query += "tweet_id=%(id)s AND "
+            to_filter["tweet_id"]=id
             
         if city:
             query += "city='%(city)s' AND "
@@ -786,3 +797,294 @@ class data_model() :
             dbConnection.close()
         #tweets.set_index("id",inplace=True)
         return tweets
+
+    def fetch_user(self, id):
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+        df_user = pd.DataFrame()
+        try:
+            df_user = pd.read_sql("SELECT * FROM user_table"
+            +" where user_id='"+str(id)+"'" , dbConnection)
+            dbConnection.close()
+            return df_user
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+        finally:
+            dbConnection.close()
+        return None
+
+    def create_user(self, user_id, first_name, last_name, gender, date_of_birth, preferred_language, mobile_number):
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        try:
+            metadata = MetaData(bind=sqlEngine)
+            user_table = Table('user_table', metadata, autoload=True)
+            # insert data via insert() construct
+            # insert
+            insert_user_table = insert(user_table).values({
+                "user_id": user_id,
+                "first_name": first_name,
+                "last_name": last_name,
+                "gender": gender,
+                "date_of_birth":date_of_birth,
+                "preferred_language": preferred_language,
+                "mobile_number": mobile_number
+
+            })
+
+            dbConnection.execute(insert_user_table)
+            dbConnection.close()
+            return 201
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+            dbConnection.close()
+            if str(ex).find("Duplicate entry"):
+                return 409
+            else:
+                return 500
+        finally:
+            dbConnection.close()
+        return 500
+
+    def update_user(self, user_id, first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
+        update_values={}
+
+        if first_name is not None:
+            update_values['first_name'] = first_name
+
+        if last_name is not None:
+            update_values['last_name'] = last_name
+
+        if gender is not None:
+            update_values['gender'] = gender
+            
+        if date_of_birth is not None:
+            update_values['date_of_birth'] = date_of_birth
+
+        if preferred_language is not None:
+            update_values['preferred_language'] = preferred_language
+
+        if mobile_number is not None:
+            update_values['mobile_number'] = mobile_number
+
+        if profession is not None:
+            update_values['profession'] = profession
+
+        if organization_role is not None:
+            update_values['organization_role'] = organization_role
+
+        if education is not None:
+            update_values['education'] = education
+
+        if marital_status is not None:
+            update_values['marital_status'] = marital_status
+
+        if country is not None:
+            update_values['country'] = country
+
+        if notification is not None:
+            update_values['notification'] = notification
+
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        try:
+            metadata = MetaData(bind=sqlEngine)
+            user_table = Table('user_table', metadata, autoload=True)
+
+            update_user_table = update(user_table).where(user_table.c.user_id == user_id).values(update_values)
+            #print(update_user_table)
+            result=dbConnection.execute(update_user_table)
+            dbConnection.close()
+            #print("rows updated", result.rowcount)
+            if result.rowcount == 1: 
+                return 201
+            if result.rowcount == 0:
+                return 404
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+            #dbConnection.close()
+            #if str(ex).find("Duplicate entry")
+        finally:
+            dbConnection.close()
+        return 400
+
+    def add_preferred_city(self, user_id, city):
+        
+        maximum_no_preferred_cities=5
+
+        cities_df=self.fetch_preferred_cities(user_id)
+
+
+
+
+
+        print("cities_df", cities_df)
+
+
+        cities=[]
+        if not cities_df.empty:
+            for column in cities_df:
+                preferred_city = cities_df[column][0]
+                print("city", preferred_city)
+                if len(preferred_city)>0 and preferred_city not in cities:
+                    cities.append(preferred_city)
+        
+        if len(cities) >= 5: ## all five
+            return 416
+
+        if city not in cities:
+            cities.append(city)
+        else:
+            #already in the list
+            return 208
+        
+        cities += ["","","","","",""]
+        
+        print("cities list", cities)
+        
+
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        try:
+            metadata = MetaData(bind=sqlEngine)
+            user_preferences_table = Table('user_preferences_table', metadata, autoload=True)        
+            # insert data via insert() construct
+            # insert
+            insert_user_table = insert(user_preferences_table).values({
+                "user_id": user_id,
+                "city_1": cities[0],
+                "city_2": cities[1],
+                "city_3": cities[2],
+                "city_4": cities[3],
+                "city_5": cities[4],
+            })
+            #print(insert_user_table)
+            on_duplicate_key_stmt = insert_user_table.on_duplicate_key_update(
+                {
+                    "city_1": cities[0],
+                    "city_2": cities[1],
+                    "city_3": cities[2],
+                    "city_4": cities[3],
+                    "city_5": cities[4]
+                }
+            )
+
+            #print(on_duplicate_key_stmt)
+            result=dbConnection.execute(on_duplicate_key_stmt)
+            dbConnection.close()
+            return 202
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+        finally:
+            dbConnection.close()
+        return 400
+
+    def remove_preferred_city(self, user_id, city):
+        
+        cities_df=self.fetch_preferred_cities(user_id)
+        print("cities_df", cities_df)
+
+        if len(cities_df) == 0: 
+            return 404
+
+        cities=[]
+        for column in cities_df:
+            preferred_city = cities_df[column][0]
+            print("city", preferred_city)
+            if len(preferred_city)>0:
+                cities.append(preferred_city)
+
+        if city in cities:
+            cities.remove(city)
+        else:
+            return 404
+        
+        cities += ["","","","","",""]
+        
+        #print("cities list", cities)
+        
+
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        try:
+            metadata = MetaData(bind=sqlEngine)
+            user_preferences_table = Table('user_preferences_table', metadata, autoload=True)        
+            # insert data via insert() construct
+            # insert
+            update_user_table = update(user_preferences_table).values({
+                "user_id": user_id,
+                "city_1": cities[0],
+                "city_2": cities[1],
+                "city_3": cities[2],
+                "city_4": cities[3],
+                "city_5": cities[4],
+            })
+            print(update_user_table)
+
+
+            #print(on_duplicate_key_stmt)
+            result=dbConnection.execute(update_user_table)
+            dbConnection.close()
+            return 202
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+        finally:
+            dbConnection.close()
+        return 400
+
+    def fetch_preferred_cities(self, id):
+        sqlEngine = self.create_connection()
+        df_user_preference = pd.DataFrame()
+        try:
+            df_user_preference = pd.read_sql(
+                "SELECT city_1, city_2, city_3, city_4, city_5 FROM user_preferences_table where user_id='"+str(id)+"'", 
+                sqlEngine)
+            return df_user_preference
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+
+        return None
+
+    def fetch_user_preferences(self, id):
+        sqlEngine = self.create_connection()
+        df_user_preference = pd.DataFrame()
+        try:
+            df_user_preference = pd.read_sql(
+                "SELECT * FROM user_preferences_table where user_id='"+str(id)+"'", 
+                sqlEngine)
+            return df_user_preference
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+
+        return None
+
+    def fetch_all_cities(self):
+        sqlEngine = self.create_connection()
+        df_cities = pd.DataFrame()
+        try:
+            df_cities = pd.read_sql("SELECT english_name, urdu_name FROM city_table where display=1", sqlEngine)
+            return df_cities
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+
+        return None

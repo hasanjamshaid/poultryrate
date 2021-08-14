@@ -8,7 +8,6 @@ import re
 import numpy as np
 from poultryrate.data_model import data_model
 
-os.environ['POULTRYRATE_DEBUG'] = 'debug'
 
 
 class tweet_classifier():
