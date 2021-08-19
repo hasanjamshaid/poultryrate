@@ -71,6 +71,7 @@ def main() -> None:
         os.environ['build_mode']=parser['DEFAULT_WINDOWS']['mode']
         os.environ['TWINT_DEBUG']=parser['DEFAULT_WINDOWS']['mode']    
 
+    os.environ['firebase_server_key']=parser['DEFAULT']['firebase_server_key']
     os.environ['db_name']=parser['DEFAULT']['db_name']
     os.environ['data_files_pattern']=parser['DEFAULT']['data_files_pattern']
 
@@ -81,6 +82,7 @@ def main() -> None:
     print("db_host ", os.environ['db_host'])
     print("db_port ", os.environ['db_port'])
     print("db_name ", os.environ['db_name'])
+
 
 
     print("logging mode ", os.environ['build_mode'])
@@ -99,6 +101,7 @@ def main() -> None:
             schedule.every(0.1).minutes.do(job_read_tweet_csv)
             schedule.every(0.1).minutes.do(job_classify_tweet)
             schedule.every(0.1).minutes.do(job_translate_tweets)
+            schedule.every(0.1).minutes.do(job_notify_tweets)
             
             while True:
                 schedule.run_pending()
@@ -151,4 +154,7 @@ def job_translate_tweets():
     data_model_obj=data_model()
     data_model_obj.translate_unprocessed_tweet()
 
-
+def job_notify_tweets():
+    print("job_notify_tweets")
+    data_model_obj=data_model()
+    data_model_obj.notify_tweet()

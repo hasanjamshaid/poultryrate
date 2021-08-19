@@ -12,6 +12,7 @@ from sqlalchemy.types import BIGINT
 from datetime import datetime, timedelta
 import os
 import configparser
+from pyfcm import FCMNotification
 
 class data_model() :
     
@@ -1023,8 +1024,7 @@ class data_model() :
             user_preferences_table = Table('user_preferences_table', metadata, autoload=True)        
             # insert data via insert() construct
             # insert
-            update_user_table = update(user_preferences_table).values({
-                "user_id": user_id,
+            update_user_table = update(user_preferences_table).where(user_preferences_table.c.user_id == user_id).values({
                 "city_1": cities[0],
                 "city_2": cities[1],
                 "city_3": cities[2],
@@ -1088,3 +1088,71 @@ class data_model() :
             print(ex)
 
         return None
+
+    
+    def fetch_tweet_not_notified(self):          
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        single_tweet=pd.DataFrame()
+        try:
+            single_tweet = pd.read_sql("SELECT * FROM tweets_table where processed=1 and notification=0 limit 0,1"
+            , dbConnection)
+            
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex) 
+        finally:
+            dbConnection.close()
+
+        return single_tweet
+
+
+    def update_tweet_notified(self, id):
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+                
+        query = "UPDATE tweets_table "
+        query += " SET notification = 1"    
+        query +=" WHERE id = " + str(id) 
+
+        try:
+            dbConnection.execute(query)
+            print(query)
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex)
+        else:
+            print("query executed successfully") 
+        finally:
+            dbConnection.close()
+
+    def notify_tweet(self):
+        data_model_obj=data_model()
+        single_tweet =data_model_obj.fetch_tweet_not_notified()
+
+        if len(single_tweet) == 0 :
+            print("No tweet available for notification")
+            return None
+
+        cities_list_str = single_tweet["cities"][0]
+        cities_list = cities_list_str.split('\n')
+        print(cities_list)
+
+        if len(cities_list) == 0 :
+            print("No city found")
+            return None         
+
+        push_service = FCMNotification(api_key=os.environ['firebase_server_key'])
+
+        for city in cities_list :
+            if len(city) > 0 :
+                message=single_tweet["translate_urdu"][0]
+                result = push_service.notify_topic_subscribers(topic_name=city, message_body=message)
+                print(city, result)
+
+                
+        data_model_obj.update_tweet_notified(single_tweet["id"][0])
+        
