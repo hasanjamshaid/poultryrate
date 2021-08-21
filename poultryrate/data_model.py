@@ -852,7 +852,7 @@ class data_model() :
             dbConnection.close()
         return 500
 
-    def update_user(self, user_id, first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
+    def update_user(self, user_id, first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_type=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
         update_values={}
 
         if first_name is not None:
@@ -875,6 +875,9 @@ class data_model() :
 
         if profession is not None:
             update_values['profession'] = profession
+
+        if organization_type is not None:
+            update_values['organization_type'] = organization_type
 
         if organization_role is not None:
             update_values['organization_role'] = organization_role
