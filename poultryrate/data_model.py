@@ -12,7 +12,7 @@ from sqlalchemy.types import BIGINT
 from datetime import datetime, timedelta
 import os
 import configparser
-from pyfcm import FCMNotification
+from poultryrate.cloud_messaging import notify_topic_subscribers
 
 class data_model() :
     
@@ -1148,13 +1148,12 @@ class data_model() :
             print("No city found")
             return None         
 
-        push_service = FCMNotification(api_key=os.environ['firebase_server_key'])
 
         for city in cities_list :
             if len(city) > 0 :
                 message=single_tweet["translate_urdu"][0]
-                result = push_service.notify_topic_subscribers(topic_name=city, message_body=message)
-                print(city, result)
+                result = notify_topic_subscribers(city, message)
+                print(city, result.json())
 
                 
         data_model_obj.update_tweet_notified(single_tweet["id"][0])

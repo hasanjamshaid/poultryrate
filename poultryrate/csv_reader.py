@@ -37,6 +37,7 @@ class csv_reader():
         latest_tweets["translate_english"]=""
         latest_tweets["translate_urdu"]=""
         latest_tweets["cities"]=""
+        latest_tweets["notification"]=""
         latest_tweets
 
         data_model_obj=data_model()
