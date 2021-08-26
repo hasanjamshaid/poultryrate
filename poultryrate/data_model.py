@@ -391,11 +391,7 @@ class data_model() :
             return None
         query+="WHERE city = city_table.english_name AND "
         to_filter = {}
-
-        if tweet_id:
-            query += "tweet_id=%(id)s AND "
-            to_filter["tweet_id"]=id
-            
+        
         if city:
             query += "city='%(city)s' AND "
             to_filter["city"]=city.capitalize()
@@ -416,12 +412,13 @@ class data_model() :
         
         query = query[:-5]
 
-        if not (id or city or start_date or end_date or tweet_id or days_ago):
+        if not (user_id or city or start_date or end_date or tweet_id or days_ago):
             return None
 
     
         query += " order by date desc "
 
+        print(query)
         query_modulus = query % to_filter    
         print (query_modulus)
 
@@ -628,7 +625,7 @@ class data_model() :
                 data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
 
         elif single_tweet["label"][0] ==  "farm_rate" :
-            print("translate farm rate")
+            print("translate farm rate ",single_tweet["id"][0])
             dataframe=data_model_obj.fetch_rates("farmrate", tweet_id=single_tweet["id"][0])
             print(single_tweet["tweet"][0])
 
