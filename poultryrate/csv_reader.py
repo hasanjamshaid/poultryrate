@@ -1,7 +1,7 @@
-import schedule
-import time
+#import schedule
+#import time
 import os
-import datetime
+#import datetime
 
 #Step 2: All tweets in file are stored in temporary table and ‘new’ tweets are moved to tweets table
 

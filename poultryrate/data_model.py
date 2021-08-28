@@ -9,9 +9,9 @@ from sqlalchemy import delete
 from sqlalchemy import update
 from sqlalchemy.engine.url import URL
 from sqlalchemy.types import BIGINT
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 import os
-import configparser
+#import configparser
 from poultryrate.cloud_messaging import notify_topic_subscribers
 
 class data_model() :
@@ -1148,9 +1148,14 @@ class data_model() :
 
         for city in cities_list :
             if len(city) > 0 :
-                message=single_tweet["translate_urdu"][0]
-                result = notify_topic_subscribers(city, message)
-                print(city, result.json())
+                text=single_tweet["translate_urdu"][0]
+                if len(text)>0 and "\n" in text:
+                    index=text.find("\n")
+                    title= text[0:index]
+                    message= text[index+1:len(text)]
+                    result = notify_topic_subscribers(topic=city, title=title, 
+                    message=message, tweet_id=single_tweet["id"][0], label=single_tweet["label"][0])
+                    print(city, result.json())
 
                 
         data_model_obj.update_tweet_notified(single_tweet["id"][0])

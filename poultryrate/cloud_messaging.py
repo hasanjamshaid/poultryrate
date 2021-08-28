@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import print_function
+#from __future__ import print_function
 
 import datetime
 
@@ -26,7 +26,7 @@ from firebase_admin import messaging
 from oauth2client.service_account import ServiceAccountCredentials
 import os
 
-def notify_topic_subscribers(topic, message):
+def notify_topic_subscribers(topic, title, message, tweet_id, label):
       SCOPES = ['https://www.googleapis.com/auth/firebase.messaging']
       cred = ServiceAccountCredentials.from_json_keyfile_name(os.environ['config_path']+'poultryrate-311919-firebase-adminsdk-rbvsh-828d6dabc0.json', SCOPES)
       access_token_info = cred.get_access_token()
@@ -40,21 +40,21 @@ def notify_topic_subscribers(topic, message):
         "message": {
           "topic": topic,
           "notification": {
-            "title": "Suggestion",
+            "title": title,
             "body": message
           },
           "data": {
-            "story_id": "story_12345"
+            "story_id": str(tweet_id)
           },
           "android": {
             "notification": {
-              "click_action": "TOP_STORY_ACTIVITY"
+              "click_action": "TWEET_NOTIFY"
             }
           },
           "apns": {
             "payload": {
               "aps": {
-                "category" : "NEW_MESSAGE_CATEGORY"
+                "category" : label
               }
             }
           }

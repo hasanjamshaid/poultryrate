@@ -10,12 +10,12 @@ from os import remove
 from poultryrate.data_model import data_model
 from poultryrate.tweet_classifier import tweet_classifier
 from poultryrate.csv_reader import csv_reader
-from flask import request, jsonify
-from flask_sslify import SSLify
-from sys import argv
-from zipfile import ZipFile
-from sqlalchemy import create_engine
-from datetime import datetime, timedelta
+#from flask import request, jsonify
+#from flask_sslify import SSLify
+#from sys import argv
+#from zipfile import ZipFile
+#from sqlalchemy import create_engine
+#from datetime import datetime, timedelta
 import configparser
 
 import requests
@@ -96,10 +96,11 @@ def main() -> None:
 
     try:
             schedule.every(1).minutes.do(job_fetch_tweet_using_twint) ## not below 1 minute
-            schedule.every(0.1).minutes.do(job_read_tweet_csv)
-            schedule.every(0.1).minutes.do(job_classify_tweet)
-            schedule.every(0.1).minutes.do(job_translate_tweets)
-            schedule.every(0.1).minutes.do(job_notify_tweets)
+            schedule.every(1).minutes.do(job_read_tweet_csv)
+            schedule.every(1).minutes.do(job_classify_tweet)
+            schedule.every(1).minutes.do(job_translate_tweets)
+            schedule.every(1).minutes.do(job_notify_tweets)
+            schedule.every(0.1).minutes.do(job_multi_jobs)
             
             while True:
                 schedule.run_pending()
@@ -136,16 +137,16 @@ def job_fetch_tweet_using_twint():
     except:
         print("Error has occured in fetching tweet")
 
-def job_classify_tweet():
-    print("job_classify_tweet")
-    tweet_classifier_obj = tweet_classifier()
-    tweet_classifier_obj.label_tweet()
-
 def job_read_tweet_csv():
     print("job_read_tweets")
     
     csv_reader_obj=csv_reader()
     csv_reader_obj.read_tweet_csv_file()
+
+def job_classify_tweet():
+    print("job_classify_tweet")
+    tweet_classifier_obj = tweet_classifier()
+    tweet_classifier_obj.label_tweet()
 
 def job_translate_tweets():
     print("job_translate_tweets")
@@ -153,6 +154,23 @@ def job_translate_tweets():
     data_model_obj.translate_unprocessed_tweet()
 
 def job_notify_tweets():
+    print("job_notify_tweets")
+    data_model_obj=data_model()
+    data_model_obj.notify_tweet()
+
+def job_multi_jobs():
+    print("job_read_tweets")    
+    csv_reader_obj=csv_reader()
+    csv_reader_obj.read_tweet_csv_file()
+
+    print("job_classify_tweet")
+    tweet_classifier_obj = tweet_classifier()
+    tweet_classifier_obj.label_tweet()
+
+    print("job_translate_tweets")
+    data_model_obj=data_model()
+    data_model_obj.translate_unprocessed_tweet()
+
     print("job_notify_tweets")
     data_model_obj=data_model()
     data_model_obj.notify_tweet()
