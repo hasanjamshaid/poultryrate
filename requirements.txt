@@ -5,3 +5,5 @@ SQLAlchemy==1.4.7
 #Flask-SSLify==0.1.5
 #PyMySQL==1.0.2
 #pyfcm==1.4.0
+firebase-admin==5.0.2
+oauth2client==4.1.3
