@@ -15,12 +15,7 @@ with open('README.md', 'r') as f:
 
 # package configuration - for reference see:
 # Packages required
-REQUIRED = [
-    'aiohttp', 'aiodns', 'beautifulsoup4', 'cchardet', 'dataclasses',
-    'elasticsearch', 'pysocks', 'pandas', 'aiohttp_socks',
-    'schedule', 'geopy', 'fake-useragent', 'googletransx',
-    'numpy', 'requests'
-]
+REQUIRED = [ 'pandas', 'schedule', 'firebase-admin', 'oauth2client', 'SQLAlchemy', 'PyMySQL' ]
 
 
 # https://setuptools.readthedocs.io/en/latest/setuptools.html#id9
