@@ -374,22 +374,22 @@ class data_model() :
 
     def fetch_rates(self, method, user_id=None, city=None, start_date=None, end_date=None, 
     tweet_id=None, days_ago=None):
-        query ="SELECT * FROM city_table, "
+        query =""
         if "breederrate" in method:
-            query += "breeder_rate_table "
+            query += "SELECT city_type_table.english_name, city_type_table.urdu_name, breeder_rate_table.* FROM city_type_table, breeder_rate_table "
         elif "docrate" in method:
-            query += "doc_rate_table "
+            query += "SELECT city_type_table.english_name, city_type_table.urdu_name, doc_rate_table.* FROM city_type_table, doc_rate_table "
         elif "eggrate" in method:
-            query += "egg_rate_table "
+            query += "SELECT city_type_table.english_name, city_type_table.urdu_name, egg_rate_table.* FROM city_type_table, egg_rate_table "
         elif "farmrate" in method:
-            query += "farm_rate_table "
+            query += "SELECT city_type_table.english_name, city_type_table.urdu_name, farm_rate_table.* FROM city_type_table, farm_rate_table "
         elif "layercullingrate" in method:
-            query += "layer_culling_rate_table "
+            query += "SELECT city_type_table.english_name, city_type_table.urdu_name, layer_culling_rate_table.* FROM city_type_table, layer_culling_rate_table "
         elif "mandirate" in method:
-            query += "mandi_rate_table "
+            query += "SELECT city_type_table.english_name, city_type_table.urdu_name, mandi_rate_table.* FROM city_type_table, mandi_rate_table "
         else:
             return None
-        query+="WHERE city = city_table.english_name AND "
+        query+="WHERE city = city_type_table.english_name AND "
         to_filter = {}
         
         if city:
@@ -1076,11 +1076,12 @@ class data_model() :
 
         return None
 
+
     def fetch_all_cities(self):
         sqlEngine = self.create_connection()
         df_cities = pd.DataFrame()
         try:
-            df_cities = pd.read_sql("SELECT english_name, urdu_name FROM city_table where display=1", sqlEngine)
+            df_cities = pd.read_sql("SELECT english_name, urdu_name FROM city_type_table where display=1", sqlEngine)
             return df_cities
         except ValueError as vx:
             print(vx)
@@ -1153,10 +1154,219 @@ class data_model() :
                     index=text.find("\n")
                     title= text[0:index]
                     message= text[index+1:len(text)]
-                    result = notify_topic_subscribers(topic=city, title=title, 
+                    topic=single_tweet["label"][0]+"_"+city.replace(" ","")
+                    result = notify_topic_subscribers(topic=topic, title=title, 
                     message=message, tweet_id=single_tweet["id"][0], label=single_tweet["label"][0])
-                    print(city, result.json())
+                    print(topic, result.json())
 
                 
         data_model_obj.update_tweet_notified(single_tweet["id"][0])
+
+    def fetch_user_fav_cities(self, id, data_type=None, city=None):
+        sqlEngine = self.create_connection()
+        df_user_preference = pd.DataFrame()
+        query="SELECT city, data_type FROM user_fav_cities_table where user_id='"+str(id)+"'"
+        if data_type != None:
+            query += " and data_type='"+data_type+"'"
         
+        if city != None:
+            query += " and city='"+city+"'"
+        try:
+            df_user_preference = pd.read_sql(
+                query,
+                sqlEngine)
+            return df_user_preference
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+
+        return None
+
+    def add_fav_city(self, user_id, data_type, city):
+        
+        maximum_no_preferred_cities=5
+
+        cities_df=self.fetch_user_fav_cities(user_id, data_type=data_type, city=city)
+
+
+        print("cities_df", cities_df)
+
+        if len(cities_df) == 1: ## already exist 
+            return 208
+        
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        try:
+            metadata = MetaData(bind=sqlEngine)
+            user_preferences_table = Table('user_fav_cities_table', metadata, autoload=True)        
+            # insert data via insert() construct
+            # insert
+            insert_user_table = insert(user_preferences_table).values({
+                "user_id": user_id,
+                "city": city,
+                "data_type": data_type
+            })
+
+            #print(on_duplicate_key_stmt)
+            result=dbConnection.execute(insert_user_table)
+            dbConnection.close()
+            return 202
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+        finally:
+            dbConnection.close()
+        return 400
+
+    def remove_fav_city(self, user_id, data_type, city):
+        
+        cities_df=self.fetch_user_fav_cities(user_id, data_type, city)
+        print("cities_df", cities_df)
+
+        if len(cities_df) == 0: 
+            return 404
+        
+        #print("cities list", cities)
+        
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        try:
+            metadata = MetaData(bind=sqlEngine)
+            user_fav_cities_table = Table('user_fav_cities_table', metadata, autoload=True)        
+            # insert data via insert() construct
+            # insert
+            update_user_table = delete(user_fav_cities_table).where(user_fav_cities_table.c.user_id == user_id) .where(user_fav_cities_table.c.city == city) .where(user_fav_cities_table.c.data_type == data_type)
+            print(update_user_table)
+
+
+            #print(on_duplicate_key_stmt)
+            result=dbConnection.execute(update_user_table)
+            dbConnection.close()
+            return 202
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+        finally:
+            dbConnection.close()
+        return 400
+
+    def fetch_all_cities_by_type(self, data_type=None):
+        sqlEngine = self.create_connection()
+        df_cities = pd.DataFrame()
+
+        query="SELECT english_name, urdu_name FROM city_type_table"
+
+        if data_type != None:
+            query += " where "+data_type+"_show='1'"
+
+        try:
+            df_cities = pd.read_sql(query, sqlEngine)
+            return df_cities
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:
+            print(ex)
+
+        return None
+
+    def fetch_rates_by_type(self, method, user_id=None, city=None, start_date=None, end_date=None, 
+    tweet_id=None, days_ago=None):
+        query = ""
+        if "breeder_rate" in method or "doc_rate" in method or "egg_rate" in method or "farm_rate" in method or "layer_culling_rate" in method or "mandirate" in method:
+            query="SELECT city_type_table.english_name, city_type_table.urdu_name, "+method+"_table.* FROM city_type_table, "+ method+"_table "
+        else:
+            return None
+        
+        query+="WHERE city = city_type_table.english_name AND "
+        to_filter = {}
+        
+        if city:
+            query += "city='%(city)s' AND "
+            to_filter["city"]=city.capitalize()
+        if start_date and end_date:
+            query += "date between '%(start_date)s' and '%(end_date)s' AND "
+            to_filter["start_date"]=start_date
+            to_filter["end_date"]=end_date
+        if tweet_id:
+            query += "tweet_id=%(tweet_id)s AND "
+            to_filter["tweet_id"]=tweet_id
+        if days_ago:
+            start_date = datetime.today() - timedelta(days=int(days_ago)+1)
+            end_date = datetime.today() + timedelta(days=1)
+            
+            query += "date between '%(start_date)s' and '%(end_date)s' AND "
+            to_filter["start_date"]=start_date
+            to_filter["end_date"]=end_date
+        
+        query = query[:-5]
+
+        if not (user_id or city or start_date or end_date or tweet_id or days_ago):
+            return None
+
+    
+        query += " order by date desc "
+
+        print(query)
+        query_modulus = query % to_filter    
+        print (query_modulus)
+
+
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+
+        tweets = None
+        try:
+            tweets = pd.read_sql(query_modulus, dbConnection)
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex)
+        else:
+            print(query_modulus)   
+        finally:
+            dbConnection.close()
+        return tweets
+
+    def update_city_type_display_fields(self):
+        sqlEngine = self.create_connection()
+        dbConnection = sqlEngine.connect()
+        
+        try:
+            query = "update city_type_table set doc_rate_show=1 where english_name in (SELECT distinct city FROM twint.doc_rate_table)"
+            dbConnection.execute(query)
+            print(query)
+        
+            query = "update city_type_table set breeder_rate_show=1 where english_name in (SELECT distinct city FROM twint.breeder_rate_table)"
+            dbConnection.execute(query)
+            print(query)
+        
+            query = "update city_type_table set egg_rate_show=1 where english_name in (SELECT distinct city FROM twint.egg_rate_table)"
+            dbConnection.execute(query)
+            print(query)
+        
+            query = "update city_type_table set farm_rate_show=1 where english_name in (SELECT distinct city FROM twint.farm_rate_table)"
+            dbConnection.execute(query)
+            print(query)
+        
+            query = "update city_type_table set layer_culling_rate_show=1 where english_name in (SELECT distinct city FROM twint.layer_culling_rate_table)"
+            dbConnection.execute(query)
+            print(query)
+        
+            query = "update city_type_table set mandi_rate_show=1 where english_name in (SELECT distinct city FROM twint.mandi_rate_table)"
+            dbConnection.execute(query)
+            print(query)
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex)
+        else:
+            print("query executed successfully") 
+        finally:
+            dbConnection.close()
+
+

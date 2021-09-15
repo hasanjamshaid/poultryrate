@@ -99,8 +99,11 @@ def main() -> None:
             schedule.every(1).minutes.do(job_read_tweet_csv)
             schedule.every(1).minutes.do(job_classify_tweet)
             schedule.every(1).minutes.do(job_translate_tweets)
+            
             schedule.every(1).minutes.do(job_notify_tweets)
+
             schedule.every(0.1).minutes.do(job_multi_jobs)
+            schedule.every(1).days.do(job_update_city_type_display_fields)            
             
             while True:
                 schedule.run_pending()
@@ -158,6 +161,10 @@ def job_notify_tweets():
     data_model_obj=data_model()
     data_model_obj.notify_tweet()
 
+def job_update_city_type_display_fields():
+    data_model_obj=data_model()
+    data_model_obj.update_city_type_display_fields()
+
 def job_multi_jobs():
     print("job_read_tweets")    
     csv_reader_obj=csv_reader()
@@ -171,6 +178,8 @@ def job_multi_jobs():
     data_model_obj=data_model()
     data_model_obj.translate_unprocessed_tweet()
 
+    
     print("job_notify_tweets")
     data_model_obj=data_model()
     data_model_obj.notify_tweet()
+    
