@@ -813,7 +813,51 @@ class data_model() :
             dbConnection.close()
         return None
 
-    def create_user(self, user_id, first_name, last_name, gender, date_of_birth, preferred_language, mobile_number):
+    def create_user(self, user_id, first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_type=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
+        update_values={}
+        
+        update_values['user_id'] = user_id
+
+
+        if first_name is not None:
+            update_values['first_name'] = first_name
+
+        if last_name is not None:
+            update_values['last_name'] = last_name
+
+        if gender is not None:
+            update_values['gender'] = gender
+            
+        if date_of_birth is not None:
+            update_values['date_of_birth'] = date_of_birth
+
+        if preferred_language is not None:
+            update_values['preferred_language'] = preferred_language
+
+        if mobile_number is not None:
+            update_values['mobile_number'] = mobile_number
+
+        if profession is not None:
+            update_values['profession'] = profession
+
+        if organization_type is not None:
+            update_values['organization_type'] = organization_type
+
+        if organization_role is not None:
+            update_values['organization_role'] = organization_role
+
+        if education is not None:
+            update_values['education'] = education
+
+        if marital_status is not None:
+            update_values['marital_status'] = marital_status
+
+        if country is not None:
+            update_values['country'] = country
+
+        if notification is not None:
+            update_values['notification'] = notification
+
         sqlEngine = self.create_connection()
         dbConnection = sqlEngine.connect()
 
@@ -822,16 +866,8 @@ class data_model() :
             user_table = Table('user_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
-            insert_user_table = insert(user_table).values({
-                "user_id": user_id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "gender": gender,
-                "date_of_birth":date_of_birth,
-                "preferred_language": preferred_language,
-                "mobile_number": mobile_number
-
-            })
+            insert_user_table = insert(user_table).values(update_values)
+            print(insert_user_table)
 
             dbConnection.execute(insert_user_table)
             dbConnection.close()
