@@ -1313,7 +1313,7 @@ class data_model() :
     def fetch_rates_by_type(self, method, user_id=None, city=None, start_date=None, end_date=None, 
     tweet_id=None, days_ago=None):
         query = ""
-        if "breeder_rate" in method or "doc_rate" in method or "egg_rate" in method or "farm_rate" in method or "layer_culling_rate" in method or "mandirate" in method:
+        if "breeder_rate" in method or "doc_rate" in method or "egg_rate" in method or "farm_rate" in method or "layer_culling_rate" in method or "mandi_rate" in method:
             query="SELECT city_type_table.english_name, city_type_table.urdu_name, "+method+"_table.* FROM city_type_table, "+ method+"_table "
         else:
             return None
