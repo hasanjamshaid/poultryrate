@@ -72,6 +72,56 @@ def notify_topic_subscribers(topic, title, message, tweet_id, label):
       print(response.json())
       return response
 
+
+def notify_rate_update_city_subscribers(topic, title, message, tweet_id, label):
+      SCOPES = ['https://www.googleapis.com/auth/firebase.messaging']
+      cred = ServiceAccountCredentials.from_json_keyfile_name(os.environ['config_path']+'poultryrate-311919-firebase-adminsdk-rbvsh-828d6dabc0.json', SCOPES)
+      access_token_info = cred.get_access_token()
+
+      headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + access_token_info.access_token,
+      }
+
+      body = {
+        "message": {
+          "topic": topic,
+          "notification": {
+            "title": title,
+            "body": message
+          },
+          "data": {
+            "story_id": str(tweet_id)
+          },
+          "android": {
+            "notification": {
+              "click_action": "TWEET_NOTIFY"
+            }
+          },
+          "apns": {
+            "payload": {
+              "aps": {
+                "category" : label
+              }
+            }
+          }
+        }
+      }
+      try:
+        firebase_admin.get_app()
+      except ValueError:
+        cred = credentials.Certificate(os.environ['config_path']+'poultryrate-311919-firebase-adminsdk-rbvsh-828d6dabc0.json')
+        firebase_admin.initialize_app(cred)
+
+      response = requests.post("https://fcm.googleapis.com/v1/projects/poultryrate-311919/messages:send",headers = headers, data=json.dumps(body))
+      print(response.status_code)
+
+      print(response.json())
+      return response
+
+
+
+
 def send_to_token():
     # [START send_to_token]
     # This registration token comes from the client FCM SDKs.

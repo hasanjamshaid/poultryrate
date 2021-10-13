@@ -35,7 +35,8 @@ setup(
     license=about['__license__'],
     scripts=['poultryrate/csv_reader.py',
     'poultryrate/data_model.py',
-    'poultryrate/tweet_classifier.py'
+    'poultryrate/tweet_classifier.py',
+    'poultryrate/epakpoultry.py'
     ],
     package_data={'poultryrate': ['poultryrate.cfg']},
 

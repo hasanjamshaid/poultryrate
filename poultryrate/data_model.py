@@ -9,10 +9,10 @@ from sqlalchemy import delete
 from sqlalchemy import update
 from sqlalchemy.engine.url import URL
 from sqlalchemy.types import BIGINT
-#from datetime import datetime, timedelta
+from datetime import datetime, timedelta
 import os
-#import configparser
 from poultryrate.cloud_messaging import notify_topic_subscribers
+import time
 
 class data_model() :
     
@@ -26,20 +26,19 @@ class data_model() :
     #     port="5000"
     #     driver="mysql"
     #     self.db_url="mysql+pymysql://"+ db_username +":"+ db_password +"@"+ db_host +"/"+ db_name
-    #     sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
-    #     return sqlEngine
+    #     sql_engine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+    #     return sql_engine
  
     def create_connection(self):
-        driver="mysql"
         self.db_url="mysql+pymysql://"+os.environ['db_username']+":"+os.environ['db_password']+"@"+os.environ['db_host']+"/"+os.environ['db_name']
-        sqlEngine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
-        return sqlEngine
+        sql_engine = create_engine(self.db_url, pool_recycle=3600, encoding="utf8")
+        return sql_engine
 
     def insert_breeder_rate(self, var_date, var_city, var_rate, var_tweet_id):        
         print("insertion breeder rate ", var_date, var_city, var_rate, var_tweet_id)
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         try:
@@ -47,22 +46,22 @@ class data_model() :
             +" date like '"+var_date[0:10]+"%%' "
             +" and city='"+var_city.capitalize()+"' "
             +" and breeder_culling_rate="+ str(var_rate)+" "
-            , dbConnection)
+            , db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex) 
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
             print("Breeder Rate already found")
             return
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             breeder_rate_table = Table('breeder_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -73,20 +72,20 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_breeder_rate_table)
+            db_connection.execute(insert_breeder_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
 
 
     def insert_doc_rate(self, var_date, var_city, var_rate, var_tweet_id):
         print("insertion doc rate ", var_date, var_city, var_rate, var_tweet_id)
         
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         try:
@@ -94,22 +93,22 @@ class data_model() :
             +" date like '"+var_date[0:10]+"%%' "
             +" and city='"+var_city.capitalize()+"' "
             +" and doc_rate="+ str(var_rate)+" "
-            , dbConnection)
+            , db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex) 
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
             print("doc rate already found")
             return
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             doc_rate_table = Table('doc_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -120,20 +119,20 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_doc_rate_table)
+            db_connection.execute(insert_doc_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
     
 
     def insert_egg_rate(self, var_date, var_city, var_cage_rate, var_floor_rate, var_starter_rate, var_tweet_id):        
         print("insertion egg rate ", var_date, var_city, var_cage_rate, var_floor_rate, var_starter_rate, var_tweet_id)
   
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         try:
@@ -144,23 +143,23 @@ class data_model() :
             " and egg_floor_rate="+ str(var_floor_rate)+" "+\
             " and egg_starter_rate="+ str(var_starter_rate)+" "
             print(query)
-            single_tweet = pd.read_sql(query, dbConnection)
+            single_tweet = pd.read_sql(query, db_connection)
 
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
             print("egg rate already found")
             return
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             egg_rate_table = Table('egg_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -173,19 +172,19 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_egg_rate_table)
+            db_connection.execute(insert_egg_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
             
     def insert_farm_rate(self, var_date, var_city, var_rate, var_tweet_id):
         print("insertion farm rate ", var_date, var_city, var_rate, var_tweet_id)
   
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         query="SELECT * FROM farm_rate_table where"+\
@@ -194,22 +193,22 @@ class data_model() :
             " and farm_rate="+ str(var_rate)+" "
         print(query)
         try:
-            single_tweet = pd.read_sql(query, dbConnection)
+            single_tweet = pd.read_sql(query, db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)  
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
             print("farm rate already found")
             return
         
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             farm_rate_table = Table('farm_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -220,20 +219,20 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_farm_rate_table)
+            db_connection.execute(insert_farm_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
 
 
     def insert_layer_culling_rate(self, var_date, var_city, var_cage_rate, var_floor_rate, var_tweet_id):        
         print("insertion layer culling rate ", var_date, var_city, var_cage_rate, var_floor_rate, var_tweet_id)
   
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         try:
@@ -242,21 +241,21 @@ class data_model() :
             +" and city='"+var_city.capitalize()+"' "
             +" and layer_culling_cage_rate="+ str(var_cage_rate)+" "
             +" and layer_culling_floor_rate="+ str(var_floor_rate)+" "
-            , dbConnection)
+            , db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)  
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
-            print("doc rate already found")
+            print("layer rate already found")
             return
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             layer_culling_rate_table = Table('layer_culling_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -268,21 +267,21 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_layer_culling_rate_table)
+            db_connection.execute(insert_layer_culling_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
 
 
 
     def insert_mandi_rate(self, var_date, var_city, var_farm_rate, var_mandi_open, var_mandi_close, var_tweet_id):
         print("insertion mandi rate ", var_date, var_city, var_farm_rate, var_mandi_open, var_mandi_close, var_tweet_id)
   
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         try:
@@ -292,21 +291,21 @@ class data_model() :
             +" and farm_rate="+ str(var_farm_rate)+" "
             +" and mandi_open="+ str(var_mandi_open)+" "
             +" and mandi_close="+ str(var_mandi_close)+" "
-            , dbConnection)
+            , db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)  
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
-            print("doc rate already found")
+            print("mandi rate already found")
             return
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             mandi_rate_table = Table('mandi_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -319,19 +318,19 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_mandi_rate_table)
+            db_connection.execute(insert_mandi_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
 
     def insert_supply_rate(self, var_date, var_city, var_rate, var_tweet_id):
         print("insertion supply rate ", var_date, var_city, var_rate, var_tweet_id)
         
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet = pd.DataFrame()
         try:
@@ -339,21 +338,21 @@ class data_model() :
             +" date like '"+var_date[0:10]+"%%' "
             +" and city='"+var_city.capitalize()+"' "
             +" and rate="+ str(var_rate)+" "
-            , dbConnection)
+            , db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)  
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) > 0 :
-            print("doc rate already found")
+            print("supply rate already found")
             return
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             supply_rate_table = Table('supply_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
@@ -364,13 +363,13 @@ class data_model() :
                 "tweet_id": var_tweet_id
                 })
 
-            dbConnection.execute(insert_supply_rate_table)
+            db_connection.execute(insert_supply_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            dbConnection.close()
+            db_connection.close()
 
     def fetch_rates(self, method, user_id=None, city=None, start_date=None, end_date=None, 
     tweet_id=None, days_ago=None):
@@ -416,19 +415,19 @@ class data_model() :
             return None
 
     
-        query += " order by date desc "
+        query += " order by date desc limit 50"
 
         print(query)
         query_modulus = query % to_filter    
         print (query_modulus)
 
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         tweets = None
         try:
-            tweets = pd.read_sql(query_modulus, dbConnection)
+            tweets = pd.read_sql(query_modulus, db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
@@ -436,13 +435,12 @@ class data_model() :
         else:
             print(query_modulus)   
         finally:
-            dbConnection.close()
+            db_connection.close()
         return tweets
 
     def update_processed_tweet(self, id, english_translation=None, urdu_translation=None, cities=None, processed=1):
-        #sqlEngine = create_engine(self.db_url+'?charset=utf8')
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         
         query = "UPDATE tweets_table "
         query += " SET processed = "+str(processed)
@@ -457,26 +455,26 @@ class data_model() :
         query +=" WHERE id = " + str(id) 
 
         try:
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            print("query executed successfully") 
+            print("tweet "+str(id)+" processed successfully") 
         finally:
-            dbConnection.close()
+            db_connection.close()
 
     def fetch_unlabel_tweet(self, var_limit):
     
         tweet = pd.DataFrame()
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
             tweet = pd.read_sql("SELECT * FROM tweets_table "+
-            " where label='' order by date desc limit "+var_limit, dbConnection)
+            " where label='' order by date desc limit "+var_limit, db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
@@ -484,76 +482,253 @@ class data_model() :
         else:
             print("SELECT * FROM tweets_table where label='' limit "+var_limit)   
         finally:
-            dbConnection.close()
+            db_connection.close()
         return tweet
     
     def update_label_table(self, tweet):
         
-        sqlEngine = self.create_connection()
+        sql_engine = self.create_connection()
         
-        dbConnection = sqlEngine.connect()
+        db_connection = sql_engine.connect()
 
-        labelTableName="label_temporary_table"
+        temp_table_name="label_temporary_table"
         tweets_sub_table = tweet
         tweets_sub_table["cities"]=tweets_sub_table["cities"].astype(str)
         tweets_sub_table["numbers"]=tweets_sub_table["numbers"].astype(str)
-        tweets_sub_table.to_sql(labelTableName, dbConnection, if_exists='replace')
+        tweets_sub_table.to_sql(temp_table_name, db_connection, if_exists='replace')
 
         query = "UPDATE tweets_table, label_temporary_table" + \
                 " SET tweets_table.label = label_temporary_table.label ," + \
                 " tweets_table.score = label_temporary_table.score" + \
                 " WHERE tweets_table.id = label_temporary_table.id" 
         try:
-            dbConnection.execute(query)
+            db_connection.execute(query)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex) 
         finally:
-            dbConnection.close()
+            db_connection.close()
         
         
     
     def store_latest_tweets_into_db(self, latest_tweets):
     
-        tempTableName = "tweets_temporary_table"         
-        tableName = "tweets_table"
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        temp_table_name = "tweets_temporary_table"         
+        table_name = "tweets_table"
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
 
         try:
-            frame = latest_tweets.to_sql(tempTableName, dbConnection, if_exists='replace');
+            latest_tweets.to_sql(temp_table_name, db_connection, if_exists='replace');
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            print("Table "+tempTableName+" created successfully.");   
+            print("Table "+temp_table_name+" created successfully.");   
         finally:
-            dbConnection.close()
+            db_connection.close()
             
-        dbConnection = sqlEngine.connect()
+        db_connection = sql_engine.connect()
         try:
-            dbConnection.execute('INSERT IGNORE INTO '+tableName+' SELECT * FROM '+tempTableName)
+            db_connection.execute('INSERT IGNORE INTO '+table_name+' SELECT * FROM '+temp_table_name)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            print('INSERT IGNORE INTO '+tableName+' SELECT * FROM '+tempTableName+' successful.')
+            print('INSERT IGNORE INTO '+table_name+' SELECT * FROM '+temp_table_name+' successful.')
             
         finally:
-            dbConnection.close()
+            db_connection.close()
     
-    def translate_unprocessed_tweet(self):          
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+    def translate_unprocessed_doc_rate_tweet(self, tweet_id):
+        print("doc rate")
+        data_model_obj = data_model()
+        dataframe=data_model_obj.fetch_rates(method="docrate", tweet_id=tweet_id)
 
-        #tweets=pd.DataFrame()
+        english_tweet="TODAY DOC RATE ANNOUNCEMENT"
+        urdu_tweet = "آج ایک دن کے چوزے کا نرخ"  
+
+        cities=""
+
+        for i in range(len(dataframe)):
+            english_tweet +="\n"+ dataframe["english_name"][i] + " " + str(dataframe["doc_rate"][i]) 
+            urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " " + str(dataframe["doc_rate"][i])
+            cities += dataframe["english_name"][i] + "\n"
+            
+        print(english_tweet)
+        print(urdu_tweet)
+        if len(dataframe) > 0 :
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities)
+        else:
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, 2)
+
+    def translate_unprocessed_egg_rate_tweet(self, tweet_id):
+        data_model_obj = data_model()
+        print("egg rate")
+        dataframe=data_model_obj.fetch_rates(method="eggrate", tweet_id=tweet_id)
+        english_tweet="TODAY EGG RATE ANNOUNCEMENT"
+        urdu_tweet =" ایگز (پیٹی) کا ریٹ "
+        cities=""
+            
+        for i in range(len(dataframe)):
+            if dataframe["egg_cage_rate"][i] != 0 and dataframe["egg_floor_rate"][i] == 0 and dataframe["egg_starter_rate"][i] == 0:
+                english_tweet +="\n"+ dataframe["english_name"][i] + " " + str(dataframe["egg_cage_rate"][i]) 
+                urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " " + str(dataframe["egg_cage_rate"][i])
+                cities += dataframe["english_name"][i] + "\n"
+            elif dataframe["egg_cage_rate"][i] != 0 and dataframe["egg_floor_rate"][i] != 0 and dataframe["egg_starter_rate"][i] != 0:
+                english_tweet= dataframe["english_name"][i] + " Egg Rate Announcement"
+                urdu_tweet =dataframe["urdu_name"][i]+ " ایگز (پیٹی) کا ریٹ "
+
+                english_tweet +="\n"+ "Cage Rate " + str(dataframe["egg_cage_rate"][i]) 
+                urdu_tweet +="\n"+ " کیج ریٹ " + str(dataframe["egg_cage_rate"][i])
+                
+                english_tweet +="\n" + "Floor Rate " + str(dataframe["egg_floor_rate"][i]) 
+                urdu_tweet +="\n" + " فلور ریٹ " + str(dataframe["egg_floor_rate"][i])
+
+                english_tweet +="\n" + "Starter Rate " + str(dataframe["egg_starter_rate"][i]) 
+                urdu_tweet +="\n"+ " سٹارٹر ریٹ " + str(dataframe["egg_starter_rate"][i]) 
+                cities += dataframe["english_name"][i] + "\n"
+
+        print(english_tweet)
+        print(urdu_tweet)
+
+        if len(dataframe) > 0 :
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities)
+        else:
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, 2)
+
+    def translate_unprocessed_farm_rate_tweet(self, tweet_id, hashtags):
+        data_model_obj = data_model()
+        print("translate farm rate ",tweet_id)
+        dataframe=data_model_obj.fetch_rates(method="farmrate", tweet_id=tweet_id)
+
+        english_tweet="TODAY FARM RATE ANNOUNCEMENT"
+        urdu_tweet = "آج کیلیے برائلر زندہ فارم نرخ اناوُنسمنٹ"
+        
+        if "increased" in hashtags.lower():
+            english_tweet="BROILER FARM RATE INCREASED "
+            urdu_tweet = "برائلر زندہ فارم نرخ بڑھ گیا ہے"
+        elif "decreased" in hashtags.lower():
+            english_tweet="BROILER FARM RATE DECREASED "
+            urdu_tweet = "برائلر زندہ فارم نرخ کم ہو گیا ہے"
+
+        cities=""
+        count=dataframe["english_name"].count()
+        unique=len(dataframe["english_name"].unique())
+
+        print("cities names")
+        print(dataframe["english_name"])
+        if count > unique:
+            print("multiple farm rate rows") #Quetta Multan announces less rate
+            max_farm_rate=dataframe["farm_rate"].max()
+            print("maximum farm rate", max_farm_rate)
+            dataframe_copy=dataframe
+
+            for i in range(len(dataframe_copy)):
+                if dataframe_copy["farm_rate"][i] != max_farm_rate:
+                    data_model_obj.delete_farm_rate(dataframe_copy["id"][i])
+                    dataframe.drop([i],inplace=True)
+
+        for i in range(len(dataframe)):
+            english_tweet +="\n"+ dataframe.iloc[i,dataframe.columns.get_loc('english_name')] + \
+            " " + str(dataframe.iloc[i, dataframe.columns.get_loc('farm_rate')]) 
+            urdu_tweet +="\n"+ dataframe.iloc[i, dataframe.columns.get_loc("urdu_name")] + \
+            " " + str(dataframe.iloc[i, dataframe.columns.get_loc("farm_rate")])
+            cities += dataframe.iloc[i, dataframe.columns.get_loc("english_name")] + "\n"
+            
+            
+        print(english_tweet)
+        print(urdu_tweet)
+
+        if len(dataframe) > 0 :
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities)
+        else:
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, 2)
+
+
+    def translate_unprocessed_layer_culling_rate_tweet(self, tweet_id):
+        data_model_obj = data_model()    
+        print("layer culling rate")
+        dataframe=data_model_obj.fetch_rates(method="layercullingrate", tweet_id=tweet_id)
+        english_tweet="TODAY LAYER CULLING PER BIRD RATE"
+        urdu_tweet = "آج لیئر بریڈر تلف ریٹ فی عدد "
+        cities=""    
+
+        for i in range(len(dataframe)):
+            english_tweet +="\n"+ dataframe["english_name"][i] + " Cage Rate " + str(dataframe["layer_culling_cage_rate"][i]) 
+            english_tweet +="\n"+ dataframe["english_name"][i] + " Floor Rate " + str(dataframe["layer_culling_floor_rate"][i]) 
+            urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " کیج ریٹ "  +" "+ str(dataframe["layer_culling_cage_rate"][i])
+            urdu_tweet +="\n"+  dataframe["urdu_name"][i] + " فلور ریٹ "+" "+ str(dataframe["layer_culling_floor_rate"][i])
+            cities += dataframe["english_name"][i] + "\n"            
+
+        print(english_tweet)
+        print(urdu_tweet)
+
+        if len(dataframe) > 0 :
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities)
+        else:
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, 2)
+
+    def translate_unprocessed_mandi_rate_tweet(self, tweet_id):          
+        print("mandi rate")
+        data_model_obj = data_model()    
+        dataframe=data_model_obj.fetch_rates(method="mandirate", tweet_id=tweet_id)
+        english_tweet="CITY - FARM RATE (MANDI OPEN) MANDI SALE"
+        urdu_tweet = "شہر - فارم ریٹ (منڈی اوپن) منڈی سیل "
+        cities=""
+            
+        for i in range(len(dataframe)):
+            english_tweet +="\n"+ dataframe["english_name"][i] +" - " + str(dataframe["farm_rate"][i]) + " (" + str(dataframe["mandi_open"][i]) +") " + str(dataframe["mandi_close"][i]) 
+            urdu_tweet +="\n"+ dataframe["urdu_name"][i] +" - " + str(dataframe["farm_rate"][i]) + " (" + str(dataframe["mandi_open"][i]) +") " + str(dataframe["mandi_close"][i]) 
+            cities += dataframe["english_name"][i] + "\n"
+
+        print(english_tweet)
+        print(urdu_tweet)
+        if len(dataframe) > 0 :
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, )
+        else:
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, 2)
+
+    def translate_unprocessed_breeder_culling_rate_tweet(self, tweet_id):          
+        print("breeder rate")
+        data_model_obj = data_model()  
+        data_model_obj.update_processed_tweet(tweet_id, processed=2)
+        dataframe=data_model_obj.fetch_rates(method="breederrate", tweet_id=tweet_id)
+        english_tweet="TODAY BREEDER CULLING PER KG RATE"
+        urdu_tweet = "آج بریڈر تلف ریٹ فی کلو"
+        cities=""    
+
+        for i in range(len(dataframe)):
+            english_tweet +="\n"+ dataframe.iloc[i,dataframe.columns.get_loc('english_name')] + \
+            " " + str(dataframe.iloc[i, dataframe.columns.get_loc('breeder_culling_rate')]) 
+            urdu_tweet +="\n"+ dataframe.iloc[i, dataframe.columns.get_loc("urdu_name")] + \
+            " " + str(dataframe.iloc[i, dataframe.columns.get_loc("breeder_culling_rate")])
+            cities += dataframe.iloc[i, dataframe.columns.get_loc("english_name")] + "\n"
+
+
+        print(english_tweet)
+        print(urdu_tweet)
+
+        if len(dataframe) > 0 :
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities)
+        else:
+            data_model_obj.update_processed_tweet(tweet_id, english_tweet, urdu_tweet, cities, 2)            
+
+    def translate_unprocessed_supply_rate_tweet(self, tweet_id):
+        print("Not implemented")
+
+    def translate_unprocessed_tweet(self):          
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
+
+
         try:
             single_tweet = pd.read_sql("SELECT * FROM tweets_table where label !='' and processed='0' " + \
-            "ORDER BY date DESC LIMIT 1", dbConnection)
+            "ORDER BY date DESC LIMIT 1", db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
@@ -561,189 +736,39 @@ class data_model() :
         else:
             print("Tweet is fetched for processing");   
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         if len(single_tweet) == 0 :
             return
         
-        data_model_obj = data_model()
-
+        print(single_tweet["tweet"][0])
         if single_tweet["label"][0] ==  "doc_rate" :
-            print("doc rate")
-            dataframe=data_model_obj.fetch_rates("docrate", tweet_id=single_tweet["id"][0])
-
-            english_tweet="TODAY DOC RATE ANNOUNCEMENT"
-            urdu_tweet = "آج ایک دن کے چوزے کا نرخ"  
-
-            cities=""
-
-            for i in range(len(dataframe)):
-                english_tweet +="\n"+ dataframe["english_name"][i] + " " + str(dataframe["doc_rate"][i]) 
-                urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " " + str(dataframe["doc_rate"][i])
-                cities += dataframe["english_name"][i] + "\n"
-            
-            print(english_tweet)
-            print(urdu_tweet)
-            if len(dataframe) > 0 :
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities)
-            else:
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
-                    
+            self.translate_unprocessed_doc_rate_tweet(single_tweet["id"][0])
         elif single_tweet["label"][0] ==  "egg_rate" :
-            print("egg rate")
-            dataframe=data_model_obj.fetch_rates("eggrate", tweet_id=single_tweet["id"][0])
-            print(single_tweet["tweet"][0])
-            english_tweet="TODAY EGG RATE ANNOUNCEMENT"
-            urdu_tweet =" ایگز (پیٹی) کا ریٹ "
-            cities=""
-            
-            for i in range(len(dataframe)):
-                if dataframe["egg_cage_rate"][i] != 0 and dataframe["egg_floor_rate"][i] == 0 and dataframe["egg_starter_rate"][i] == 0:
-                    english_tweet +="\n"+ dataframe["english_name"][i] + " " + str(dataframe["egg_cage_rate"][i]) 
-                    urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " " + str(dataframe["egg_cage_rate"][i])
-                    cities += dataframe["english_name"][i] + "\n"
-                elif dataframe["egg_cage_rate"][i] != 0 and dataframe["egg_floor_rate"][i] != 0 and dataframe["egg_starter_rate"][i] != 0:
-                    english_tweet= dataframe["english_name"][i] + " Egg Rate Announcement"
-                    urdu_tweet =dataframe["urdu_name"][i]+ " ایگز (پیٹی) کا ریٹ "
-
-                    english_tweet +="\n"+ "Cage Rate " + str(dataframe["egg_cage_rate"][i]) 
-                    urdu_tweet +="\n"+ " کیج ریٹ " + str(dataframe["egg_cage_rate"][i])
-                    
-                    english_tweet +="\n" + "Floor Rate " + str(dataframe["egg_floor_rate"][i]) 
-                    urdu_tweet +="\n" + " فلور ریٹ " + str(dataframe["egg_floor_rate"][i])
-
-                    english_tweet +="\n" + "Starter Rate " + str(dataframe["egg_starter_rate"][i]) 
-                    urdu_tweet +="\n"+ " سٹارٹر ریٹ " + str(dataframe["egg_starter_rate"][i]) 
-                    cities += dataframe["english_name"][i] + "\n"
-
-            print(english_tweet)
-            print(urdu_tweet)
-
-            if len(dataframe) > 0 :
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities)
-            else:
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
-
+            self.translate_unprocessed_egg_rate_tweet(single_tweet["id"][0])
         elif single_tweet["label"][0] ==  "farm_rate" :
-            print("translate farm rate ",single_tweet["id"][0])
-            dataframe=data_model_obj.fetch_rates("farmrate", tweet_id=single_tweet["id"][0])
-            print(single_tweet["tweet"][0])
-
-
-
-            english_tweet="TODAY FARM RATE ANNOUNCEMENT"
-            urdu_tweet = "آج کیلیے برائلر زندہ فارم نرخ اناوُنسمنٹ"
-            cities=""
-            count=dataframe["english_name"].count()
-            unique=len(dataframe["english_name"].unique())
-
-            print("cities names")
-            print(dataframe["english_name"])
-            if count > unique:
-                print("multiple farm rate rows")
-                max=dataframe["farm_rate"].max()
-                print("maximum farm rate", max)
-                dataframe_copy=dataframe
-
-                for i in range(len(dataframe_copy)):
-                    if dataframe_copy["farm_rate"][i] != max:
-                        data_model_obj.delete_farm_rate(dataframe_copy["id"][i])
-                        dataframe.drop([i],inplace=True)
-
-            for i in range(len(dataframe)):
-                english_tweet +="\n"+ dataframe.iloc[i,dataframe.columns.get_loc('english_name')] + \
-                " " + str(dataframe.iloc[i, dataframe.columns.get_loc('farm_rate')]) 
-                urdu_tweet +="\n"+ dataframe.iloc[i, dataframe.columns.get_loc("urdu_name")] + \
-                " " + str(dataframe.iloc[i, dataframe.columns.get_loc("farm_rate")])
-                cities += dataframe.iloc[i, dataframe.columns.get_loc("english_name")] + "\n"
-            
-            
-            print(english_tweet)
-            print(urdu_tweet)
-
-            if len(dataframe) > 0 :
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities)
-            else:
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
-
+            self.translate_unprocessed_farm_rate_tweet(single_tweet["id"][0], single_tweet["hashtags"][0])
         elif single_tweet["label"][0] ==  "layer_culling_rate" :
-            print("layer culling rate")
-            dataframe=data_model_obj.fetch_rates("layercullingrate", tweet_id=single_tweet["id"][0])
-            print(single_tweet["tweet"][0])
-            english_tweet="TODAY LAYER CULLING PER BIRD RATE"
-            urdu_tweet = "آج لیئر بریڈر تلف ریٹ فی عدد "
-            cities=""    
-
-            for i in range(len(dataframe)):
-                english_tweet +="\n"+ dataframe["english_name"][i] + " Cage Rate " + str(dataframe["layer_culling_cage_rate"][i]) 
-                english_tweet +="\n"+ dataframe["english_name"][i] + " Floor Rate " + str(dataframe["layer_culling_floor_rate"][i]) 
-                urdu_tweet +="\n"+ dataframe["urdu_name"][i] + " کیج ریٹ "  +" "+ str(dataframe["layer_culling_cage_rate"][i])
-                urdu_tweet +="\n"+  dataframe["urdu_name"][i] + " فلور ریٹ "+" "+ str(dataframe["layer_culling_floor_rate"][i]) 
-                cities += dataframe["english_name"][i] + "\n"            
-
-            print(english_tweet)
-            print(urdu_tweet)
-
-            if len(dataframe) > 0 :
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities)
-            else:
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
+            self.translate_unprocessed_layer_culling_rate_tweet(single_tweet["id"][0])        
         elif single_tweet["label"][0] ==  "mandi_rate" :
-            print("mandi rate")
-            dataframe=data_model_obj.fetch_rates("mandirate", tweet_id=single_tweet["id"][0])
-            print(single_tweet["tweet"][0])
-            english_tweet="CITY - FARM RATE (MANDI OPEN) MANDI SALE"
-            urdu_tweet = "شہر - فارم ریٹ (منڈی اوپن) منڈی سیل "
-            cities=""
-            
-            for i in range(len(dataframe)):
-                english_tweet +="\n"+ dataframe["english_name"][i] +" - " + str(dataframe["farm_rate"][i]) + " (" + str(dataframe["mandi_open"][i]) +") " + str(dataframe["mandi_close"][i]) 
-
-                urdu_tweet +="\n"+ dataframe["urdu_name"][i] +" - " + str(dataframe["farm_rate"][i]) + " (" + str(dataframe["mandi_open"][i]) +") " + str(dataframe["mandi_close"][i]) 
-
-                cities += dataframe["english_name"][i] + "\n"
-
-            print(english_tweet)
-            print(urdu_tweet)
-            if len(dataframe) > 0 :
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, )
-            else:
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)
+            self.translate_unprocessed_mandi_rate_tweet(single_tweet["id"][0])            
         elif single_tweet["label"][0] ==  "breeder_rate" :
-            print("breeder rate")
-            data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
-            dataframe=data_model_obj.fetch_rates("breederrate", tweet_id=single_tweet["id"][0])
-            print(single_tweet["tweet"][0])
-            english_tweet="TODAY BREEDER CULLING PER KG RATE"
-            urdu_tweet = "آج بریڈر تلف ریٹ فی کلو"
-            cities=""    
-
-            for i in range(len(dataframe)):
-                english_tweet +="\n"+ dataframe.iloc[i,dataframe.columns.get_loc('english_name')] + \
-                " " + str(dataframe.iloc[i, dataframe.columns.get_loc('breeder_culling_rate')]) 
-                urdu_tweet +="\n"+ dataframe.iloc[i, dataframe.columns.get_loc("urdu_name")] + \
-                " " + str(dataframe.iloc[i, dataframe.columns.get_loc("breeder_culling_rate")])
-                cities += dataframe.iloc[i, dataframe.columns.get_loc("english_name")] + "\n"
-
-
-            print(english_tweet)
-            print(urdu_tweet)
-
-            if len(dataframe) > 0 :
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities)
-            else:
-                data_model_obj.update_processed_tweet(single_tweet["id"][0], english_tweet, urdu_tweet, cities, 2)            
+            self.translate_unprocessed_breeder_culling_rate_tweet(single_tweet["id"][0])            
         elif single_tweet["label"][0] ==  "supply_rate" :
             print("supply rate")
+            data_model_obj = data_model()          
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
         elif single_tweet["label"][0] ==  "unknown" :
             print("unknown")
+            data_model_obj = data_model()          
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
         elif single_tweet["label"][0] ==  "last_year" :
             print("last year")
+            data_model_obj = data_model()          
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
         else :
             print(single_tweet["label"][0])
+            data_model_obj = data_model()        
             data_model_obj.update_processed_tweet(single_tweet["id"][0], processed=2)
 
     def delete_farm_rate(self, var_id):
@@ -751,24 +776,23 @@ class data_model() :
         if not (var_id):
             return None
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
-        tweets = None
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             farm_rate_table = Table('farm_rate_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
             delete_farm_rate_table = delete(farm_rate_table).where(farm_rate_table.c.id == int(var_id))
 
-            dbConnection.execute(delete_farm_rate_table)
+            db_connection.execute(delete_farm_rate_table)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)   
         finally:
-            dbConnection.close()
+            db_connection.close()
     
     
     def latest_tweets_feed(self, page):
@@ -779,12 +803,12 @@ class data_model() :
         query = "SELECT id, created_at, tweet, link, translate_english, translate_urdu, label, cities " + \
                 " FROM tweets_table WHERE processed=1 order by created_at desc limit "+ str(start_limit) + "," + str(end_limit)
         
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         tweets = pd.DataFrame()
         try:
-            tweets = pd.read_sql(query, dbConnection)
+            tweets = pd.read_sql(query, db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
@@ -792,32 +816,31 @@ class data_model() :
         else:
             print(query)   
         finally:
-            dbConnection.close()
+            db_connection.close()
         #tweets.set_index("id",inplace=True)
         return tweets
 
     def fetch_user(self, id):
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         df_user = pd.DataFrame()
         try:
             df_user = pd.read_sql("SELECT * FROM user_table"
-            +" where user_id='"+str(id)+"'" , dbConnection)
-            dbConnection.close()
+            +" where user_id='"+str(id)+"'" , db_connection)
+            db_connection.close()
             return df_user
         except ValueError as vx:
             print(vx)
         except Exception as ex:
             print(ex)
         finally:
-            dbConnection.close()
+            db_connection.close()
         return None
 
-    def create_user(self, user_id, first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_type=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
+    def create_user(self, user_id,first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_type=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
         update_values={}
         
         update_values['user_id'] = user_id
-
 
         if first_name is not None:
             update_values['first_name'] = first_name
@@ -858,31 +881,31 @@ class data_model() :
         if notification is not None:
             update_values['notification'] = notification
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             user_table = Table('user_table', metadata, autoload=True)
             # insert data via insert() construct
             # insert
             insert_user_table = insert(user_table).values(update_values)
             print(insert_user_table)
 
-            dbConnection.execute(insert_user_table)
-            dbConnection.close()
+            db_connection.execute(insert_user_table)
+            db_connection.close()
             return 201
         except ValueError as vx:
             print(vx)
         except Exception as ex:
             print(ex)
-            dbConnection.close()
+            db_connection.close()
             if str(ex).find("Duplicate entry"):
                 return 409
             else:
                 return 500
         finally:
-            dbConnection.close()
+            db_connection.close()
         return 500
 
     def update_user(self, user_id, first_name=None, last_name=None, gender=None, date_of_birth=None, preferred_language=None, mobile_number=None, profession=None, organization_type=None, organization_role=None, education=None, marital_status=None, country=None, mobile_operator=None, notification=None):
@@ -927,17 +950,17 @@ class data_model() :
         if notification is not None:
             update_values['notification'] = notification
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             user_table = Table('user_table', metadata, autoload=True)
 
             update_user_table = update(user_table).where(user_table.c.user_id == user_id).values(update_values)
             #print(update_user_table)
-            result=dbConnection.execute(update_user_table)
-            dbConnection.close()
+            result=db_connection.execute(update_user_table)
+            db_connection.close()
             #print("rows updated", result.rowcount)
             if result.rowcount == 1: 
                 return 201
@@ -947,21 +970,16 @@ class data_model() :
             print(vx)
         except Exception as ex:
             print(ex)
-            #dbConnection.close()
+            #db_connection.close()
             #if str(ex).find("Duplicate entry")
         finally:
-            dbConnection.close()
+            db_connection.close()
         return 400
 
     def add_preferred_city(self, user_id, city):
         
-        maximum_no_preferred_cities=5
 
         cities_df=self.fetch_preferred_cities(user_id)
-
-
-
-
 
         print("cities_df", cities_df)
 
@@ -988,11 +1006,11 @@ class data_model() :
         print("cities list", cities)
         
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             user_preferences_table = Table('user_preferences_table', metadata, autoload=True)        
             # insert data via insert() construct
             # insert
@@ -1016,15 +1034,15 @@ class data_model() :
             )
 
             #print(on_duplicate_key_stmt)
-            result=dbConnection.execute(on_duplicate_key_stmt)
-            dbConnection.close()
+            db_connection.execute(on_duplicate_key_stmt)
+            db_connection.close()
             return 202
         except ValueError as vx:
             print(vx)
         except Exception as ex:
             print(ex)
         finally:
-            dbConnection.close()
+            db_connection.close()
         return 400
 
     def remove_preferred_city(self, user_id, city):
@@ -1052,11 +1070,11 @@ class data_model() :
         #print("cities list", cities)
         
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             user_preferences_table = Table('user_preferences_table', metadata, autoload=True)        
             # insert data via insert() construct
             # insert
@@ -1071,24 +1089,24 @@ class data_model() :
 
 
             #print(on_duplicate_key_stmt)
-            result=dbConnection.execute(update_user_table)
-            dbConnection.close()
+            db_connection.execute(update_user_table)
+            db_connection.close()
             return 202
         except ValueError as vx:
             print(vx)
         except Exception as ex:
             print(ex)
         finally:
-            dbConnection.close()
+            db_connection.close()
         return 400
 
     def fetch_preferred_cities(self, id):
-        sqlEngine = self.create_connection()
+        sql_engine = self.create_connection()
         df_user_preference = pd.DataFrame()
         try:
             df_user_preference = pd.read_sql(
                 "SELECT city_1, city_2, city_3, city_4, city_5 FROM user_preferences_table where user_id='"+str(id)+"'", 
-                sqlEngine)
+                sql_engine)
             return df_user_preference
         except ValueError as vx:
             print(vx)
@@ -1098,12 +1116,12 @@ class data_model() :
         return None
 
     def fetch_user_preferences(self, id):
-        sqlEngine = self.create_connection()
+        sql_engine = self.create_connection()
         df_user_preference = pd.DataFrame()
         try:
             df_user_preference = pd.read_sql(
                 "SELECT * FROM user_preferences_table where user_id='"+str(id)+"'", 
-                sqlEngine)
+                sql_engine)
             return df_user_preference
         except ValueError as vx:
             print(vx)
@@ -1114,10 +1132,10 @@ class data_model() :
 
 
     def fetch_all_cities(self):
-        sqlEngine = self.create_connection()
+        sql_engine = self.create_connection()
         df_cities = pd.DataFrame()
         try:
-            df_cities = pd.read_sql("SELECT english_name, urdu_name FROM city_type_table where display=1", sqlEngine)
+            df_cities = pd.read_sql("SELECT english_name, urdu_name FROM city_type_table where display=1", sql_engine)
             return df_cities
         except ValueError as vx:
             print(vx)
@@ -1128,34 +1146,34 @@ class data_model() :
 
     
     def fetch_tweet_not_notified(self):          
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         single_tweet=pd.DataFrame()
         try:
             single_tweet = pd.read_sql("SELECT * FROM tweets_table where processed=1 and notification=0 limit 0,1"
-            , dbConnection)
+            , db_connection)
             
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex) 
         finally:
-            dbConnection.close()
+            db_connection.close()
 
         return single_tweet
 
 
     def update_tweet_notified(self, id):
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
                 
         query = "UPDATE tweets_table "
         query += " SET notification = 1"    
         query +=" WHERE id = " + str(id) 
 
         try:
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         except ValueError as vx:
             print(vx)
@@ -1164,7 +1182,7 @@ class data_model() :
         else:
             print("query executed successfully") 
         finally:
-            dbConnection.close()
+            db_connection.close()
 
     def notify_tweet(self):
         data_model_obj=data_model()
@@ -1199,7 +1217,7 @@ class data_model() :
         data_model_obj.update_tweet_notified(single_tweet["id"][0])
 
     def fetch_user_fav_cities(self, id, data_type=None, city=None):
-        sqlEngine = self.create_connection()
+        sql_engine = self.create_connection()
         df_user_preference = pd.DataFrame()
         query="SELECT city, data_type FROM user_fav_cities_table where user_id='"+str(id)+"'"
         if data_type != None:
@@ -1210,7 +1228,7 @@ class data_model() :
         try:
             df_user_preference = pd.read_sql(
                 query,
-                sqlEngine)
+                sql_engine)
             return df_user_preference
         except ValueError as vx:
             print(vx)
@@ -1221,8 +1239,6 @@ class data_model() :
 
     def add_fav_city(self, user_id, data_type, city):
         
-        maximum_no_preferred_cities=5
-
         cities_df=self.fetch_user_fav_cities(user_id, data_type=data_type, city=city)
 
 
@@ -1231,11 +1247,11 @@ class data_model() :
         if len(cities_df) == 1: ## already exist 
             return 208
         
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             user_preferences_table = Table('user_fav_cities_table', metadata, autoload=True)        
             # insert data via insert() construct
             # insert
@@ -1246,15 +1262,15 @@ class data_model() :
             })
 
             #print(on_duplicate_key_stmt)
-            result=dbConnection.execute(insert_user_table)
-            dbConnection.close()
+            db_connection.execute(insert_user_table)
+            db_connection.close()
             return 202
         except ValueError as vx:
             print(vx)
         except Exception as ex:
             print(ex)
         finally:
-            dbConnection.close()
+            db_connection.close()
         return 400
 
     def remove_fav_city(self, user_id, data_type, city):
@@ -1267,11 +1283,11 @@ class data_model() :
         
         #print("cities list", cities)
         
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         try:
-            metadata = MetaData(bind=sqlEngine)
+            metadata = MetaData(bind=sql_engine)
             user_fav_cities_table = Table('user_fav_cities_table', metadata, autoload=True)        
             # insert data via insert() construct
             # insert
@@ -1280,19 +1296,19 @@ class data_model() :
 
 
             #print(on_duplicate_key_stmt)
-            result=dbConnection.execute(update_user_table)
-            dbConnection.close()
+            result=db_connection.execute(update_user_table)
+            db_connection.close()
             return 202
         except ValueError as vx:
             print(vx)
         except Exception as ex:
             print(ex)
         finally:
-            dbConnection.close()
+            db_connection.close()
         return 400
 
     def fetch_all_cities_by_type(self, data_type=None):
-        sqlEngine = self.create_connection()
+        sql_engine = self.create_connection()
         df_cities = pd.DataFrame()
 
         query="SELECT english_name, urdu_name FROM city_type_table"
@@ -1301,7 +1317,7 @@ class data_model() :
             query += " where "+data_type+"_show='1'"
 
         try:
-            df_cities = pd.read_sql(query, sqlEngine)
+            df_cities = pd.read_sql(query, sql_engine)
             return df_cities
         except ValueError as vx:
             print(vx)
@@ -1345,19 +1361,19 @@ class data_model() :
             return None
 
     
-        query += " order by date desc "
+        query += " order by date desc limit 50"
 
         print(query)
         query_modulus = query % to_filter    
         print (query_modulus)
 
 
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
         tweets = None
         try:
-            tweets = pd.read_sql(query_modulus, dbConnection)
+            tweets = pd.read_sql(query_modulus, db_connection)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
@@ -1365,44 +1381,141 @@ class data_model() :
         else:
             print(query_modulus)   
         finally:
-            dbConnection.close()
+            db_connection.close()
         return tweets
 
     def update_city_type_display_fields(self):
-        sqlEngine = self.create_connection()
-        dbConnection = sqlEngine.connect()
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
         
         try:
             query = "update city_type_table set doc_rate_show=1 where english_name in (SELECT distinct city FROM twint.doc_rate_table)"
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         
             query = "update city_type_table set breeder_rate_show=1 where english_name in (SELECT distinct city FROM twint.breeder_rate_table)"
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         
             query = "update city_type_table set egg_rate_show=1 where english_name in (SELECT distinct city FROM twint.egg_rate_table)"
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         
             query = "update city_type_table set farm_rate_show=1 where english_name in (SELECT distinct city FROM twint.farm_rate_table)"
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         
             query = "update city_type_table set layer_culling_rate_show=1 where english_name in (SELECT distinct city FROM twint.layer_culling_rate_table)"
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         
             query = "update city_type_table set mandi_rate_show=1 where english_name in (SELECT distinct city FROM twint.mandi_rate_table)"
-            dbConnection.execute(query)
+            db_connection.execute(query)
             print(query)
         except ValueError as vx:
             print(vx)
         except Exception as ex:   
             print(ex)
         else:
-            print("query executed successfully") 
+            print("update city type table executed successfully") 
         finally:
-            dbConnection.close()
+            db_connection.close()
 
+    def fetch_daily_table(self, table_name):
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
 
+        db_table_df=pd.read_sql_table(table_name, db_connection)
+
+        db_connection.close()
+        return db_table_df
+
+    def update_daily_rate_tables(self, table_name, values, db_row):
+        if db_row.empty:        
+            try:
+                sql_engine = self.create_connection()
+                db_connection = sql_engine.connect()
+                metadata = MetaData(bind=sql_engine)
+                daily_rate_table = Table(table_name, metadata, autoload=True)
+                # insert data via insert() construct
+                # insert
+                daily_rate_table = insert(daily_rate_table).values(values)
+
+                db_connection.execute(daily_rate_table)
+            except ValueError as vx:
+                print(vx)
+            except Exception as ex:   
+                print(ex)
+        else:
+            try:
+                sql_engine = self.create_connection()
+                db_connection = sql_engine.connect()
+                metadata = MetaData(bind=sql_engine)
+                daily_rate_table = Table(table_name, metadata, autoload=True)
+                # insert data via insert() construct
+                # insert
+                daily_rate_table = update(daily_rate_table).where(daily_rate_table.c.city == values["city"]).values(values)
+                db_connection.execute(daily_rate_table)
+            except ValueError as vx:
+                print(vx)
+            except Exception as ex:   
+                print(ex)
+            
+        try:
+            sql_engine = self.create_connection()
+            db_connection = sql_engine.connect()
+            
+            new_values={}
+            new_values["id"]=int(time.time() * 1000)
+            new_values["source"]="epakpoultry"
+            row_str = str(values).replace("'","").replace("{","").replace("}","")
+            new_values["announcement_english"]=table_name + " " + row_str
+            new_values["cities"]=""
+
+            metadata = MetaData(bind=sql_engine)
+            daily_feed_table = Table('daily_feed_table', metadata, autoload=True)
+            # insert data via insert() construct
+            # insert
+                    
+            daily_feed_table = insert(daily_feed_table).values(new_values)
+            print(new_values)
+            db_connection.execute(daily_feed_table)
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex)
+
+    def reset_epakpoultry_tables(self):          
+        sql_engine = self.create_connection()
+        db_connection = sql_engine.connect()
+
+        try:
+            query = "truncate daily_breeder_culling_rate_table;"
+            db_connection.execute(query)
+            print(query)
+            query = "truncate daily_doc_rate_table;"
+            db_connection.execute(query)
+            print(query)
+            query = "truncate daily_egg_rate_table;"
+            db_connection.execute(query)
+            print(query)
+            query = "truncate daily_farm_rate_table;"
+            db_connection.execute(query)
+            print(query)     
+            query = "truncate daily_layer_culling_rate_table;"
+            db_connection.execute(query)
+            print(query)
+            query = "truncate daily_mandi_rate_table;"
+            db_connection.execute(query)
+            print(query)
+            query = "truncate daily_supply_rate_table;"
+            db_connection.execute(query)
+            print(query)     
+        except ValueError as vx:
+            print(vx)
+        except Exception as ex:   
+            print(ex)
+        else:
+            print("daily tables truncated successfully") 
+        finally:
+            db_connection.close()

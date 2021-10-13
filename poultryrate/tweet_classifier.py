@@ -61,7 +61,6 @@ class tweet_classifier():
         for i in range(len(self.cities)):
             if self.cities.iloc[i,1] in txt:
                 city_list.append(self.cities.iloc[i,0])
-                #txt=txt.replace(cities.iloc[i,1], cities.iloc[i,0])
         
         for i in range(len(self.cities)):
             if self.cities.iloc[i,0].lower() in txt:
@@ -69,7 +68,6 @@ class tweet_classifier():
             
         
         if len(city_list) > 0:
-            #list_city_list=list(city_list)
             tweet.at[row, "cities"] = np.unique(city_list)
             tweet.at[row, "cities_len"] = len(tweet.at[row, "cities"])
 
@@ -77,28 +75,24 @@ class tweet_classifier():
         for i in range(len(self.words_breeder_rate)):
             if self.words_breeder_rate.iloc[i,1] in txt:
                 words_breeder_rate_count += 1
-                #txt=txt.replace(self.words_breeder_rate.iloc[i,1], self.words_breeder_rate.iloc[i,0])
         tweet.at[row, "words_breeder_rate"] = words_breeder_rate_count   
 
         words_doc_rate_count=0
         for i in range(len(self.words_doc_rate)):
             if self.words_doc_rate.iloc[i,1] in txt:
                 words_doc_rate_count += 1
-                #txt=txt.replace(self.words_doc_rate.iloc[i,1], self.words_doc_rate.iloc[i,0])
         tweet.at[row, "words_doc_rate"] = words_doc_rate_count  
 
         words_egg_rate_count=0
         for i in range(len(self.words_egg_rate)):
             if self.words_egg_rate.iloc[i,1] in txt:
                 words_egg_rate_count += 1
-                #txt=txt.replace(self.words_egg_rate.iloc[i,1], self.words_egg_rate.iloc[i,0])
         tweet.at[row, "words_egg_rate"] = words_egg_rate_count   
 
         words_farm_rate_count=0
         for i in range(len(self.words_farm_rate)):
             if self.words_farm_rate.iloc[i,1] in txt:
                 words_farm_rate_count += 1
-                #txt=txt.replace(self.words_farm_rate.iloc[i,1], self.words_farm_rate.iloc[i,0])
         tweet.at[row, "words_farm_rate"] = words_farm_rate_count   
 
 
@@ -106,7 +100,6 @@ class tweet_classifier():
         for i in range(len(self.words_last_year)):
             if self.words_last_year.iloc[i,1] in txt:
                 words_last_year_count += 1
-                #txt=txt.replace(self.words_last_year.iloc[i,1], self.words_last_year.iloc[i,0])
         tweet.at[row, "words_last_year"] = words_last_year_count   
 
 
@@ -114,7 +107,6 @@ class tweet_classifier():
         for i in range(len(self.words_layer_culling_rate)):
             if self.words_layer_culling_rate.iloc[i,1] in txt:
                 words_layer_culling_rate_count += 1
-                #txt=txt.replace(self.words_layer_culling_rate.iloc[i,1], self.words_layer_culling_rate.iloc[i,0])
         tweet.at[row, "words_layer_culling_rate"] = words_layer_culling_rate_count   
 
 
@@ -122,7 +114,6 @@ class tweet_classifier():
         for i in range(len(self.words_mandi_rate)):
             if self.words_mandi_rate.iloc[i,1] in txt:
                 words_mandi_rate_count += 1
-                #txt=txt.replace(words_mandi_rate.iloc[i,1], words_mandi_rate.iloc[i,0])
         tweet.at[row, "words_mandi_rate"] = words_mandi_rate_count   
 
 
@@ -130,7 +121,6 @@ class tweet_classifier():
         for i in range(len(self.words_obituary)):
             if self.words_obituary.iloc[i,1] in txt:
                 words_obituary_count += 1
-                #txt=txt.replace(words_obituary.iloc[i,1], words_obituary.iloc[i,0])
         tweet.at[row, "words_obituary"] = words_obituary_count   
 
 
@@ -138,23 +128,18 @@ class tweet_classifier():
         for i in range(len(self.words_supply_rate)):
             if self.words_supply_rate.iloc[i,1] in txt:
                 words_supply_rate_count += 1
-                #txt=txt.replace(self.words_supply_rate.iloc[i,1], self.words_supply_rate.iloc[i,0])
         tweet.at[row, "words_supply_rate"] = words_supply_rate_count   
         
         words_extra_count=0
         for i in range(len(self.words_extra)):
             if self.words_extra.iloc[i,1] in txt:
                 words_extra_count += 1
-                #txt=txt.replace(words_extra.iloc[i,1], words_extra.iloc[i,0])
         tweet.at[row, "extra"] = words_extra_count   
 
         words_junk_count=0
         for i in range(len(self.words_junk)):
             if self.words_junk.iloc[i,0] in txt:
                 words_junk_count += 1
-        #url_len = len(tweet.at[row, "urls"][0])
-        #tweet.at[row, "junk"] =  (url_len % 10)  
-
         if '🍗' in txt :
             tweet.at[row, "meat"] = txt.count('🍗')
 
@@ -170,25 +155,21 @@ class tweet_classifier():
         for j in range(len(self.islamicmonths)):
             if self.islamicmonths.iloc[j,1] in txt:
                 tweet.at[row, "date_in_tweet"] += 1
-                #txt=txt.replace(islamicmonths.iloc[j,1], islamicmonths.iloc[j,0])      
         for k in range(len(self.gregorianmonths)):
             if self.gregorianmonths.iloc[k,1] in txt:
-                tweet.at[row, "date_in_tweet"] += 1        
-                #txt=txt.replace(gregorianmonths.iloc[k,1], gregorianmonths.iloc[k,0])  
+                tweet.at[row, "date_in_tweet"] += 1 
         for l in range(len(self.daysofweek)):
             if self.daysofweek.iloc[l,1] in txt:
                 tweet.at[row, "date_in_tweet"] += 1        
-                #txt=txt.replace(daysofweek.iloc[l,1], daysofweek.iloc[l,0])
 
         if txt.startswith("@"):
             tweet.at[row, "junk"]=1        
                 
         numbers=re.findall(r'[-+]?[.]?[\d]+(?:,\d\d\d)*[\.]?\d*(?:[eE][-+]?\d+)?', txt)
         
-        #print("numbers ", numbers)
+
         index=0
         while index < len(numbers):
-            #print("number ",numbers[index])
             numbers[index]=numbers[index].replace(",", "")
             numbers[index]=float(numbers[index])
             if numbers[index] < 0 and index > 0:
@@ -196,12 +177,9 @@ class tweet_classifier():
                 del numbers[index-1]
             index+=1
 
-        #if len(numbers)>0 :
         tweet.at[row, "numbers"]=numbers
         tweet.at[row,"numbers_len"]=len(numbers)
-        #if len(numbers)==1 and rooster_count == 1:
-        #tweet.iloc[row, tweet.columns.get_loc("rate")]=numbers
-        
+
         tweet.at[row,"translate"]=txt
 
 
@@ -230,31 +208,23 @@ class tweet_classifier():
 
 
         tweet["breeder_rate"]=tweet.words_breeder_rate + tweet.cities_len + tweet.numbers_len 
-        #tweet.date_in_tweet>0
 
         tweet["doc_rate"]=tweet.words_doc_rate + tweet.cities_len + tweet.numbers_len + tweet.chick
-        #tweet.date_in_tweet
 
         tweet["egg_rate"]= tweet.words_egg_rate + tweet.cities_len + tweet.numbers_len + tweet.egg
-        #tweet.date_in_tweet
 
         tweet["mandi_rate"] = tweet.words_mandi_rate + tweet.cities_len + tweet.rooster + tweet.numbers_len + tweet.egg + tweet.chick
-        #tweet.date_in_tweet
 
         tweet["farm_rate"]= tweet.words_farm_rate + tweet.cities_len + tweet.rooster + tweet.numbers_len
         
         tweet["last_year"]= tweet.words_last_year + tweet.cities_len + tweet.numbers_len + tweet.rooster + tweet.egg + tweet.chick 
         
         if 'hashtags' in tweet.columns and tweet.at[0,"hashtags"].find("گزشتہ_سال") != -1 :
-            tweet["last_year"] += 100
-        
-        #tweet.date_in_tweet
+            tweet["last_year"] += 5
 
         tweet["layer_culling_rate"]= tweet.words_layer_culling_rate + tweet.cities_len + tweet.numbers_len
-        #tweet.date_in_tweet
 
         tweet["supply_rate"]= tweet.words_supply_rate + tweet.cities_len + tweet.numbers_len + tweet.rooster + tweet.meat + tweet.video
-        #tweet.date_in_tweet
 
         tweet["informational"]=tweet.junk + tweet.video + tweet.numbers_len
 
@@ -445,8 +415,6 @@ class tweet_classifier():
             if len(partial_egg_rate_df)>0 :
                 city_list=self.tweet_summary.cities[0].replace("' '","','")
                 eval_city_list=eval(city_list)
-                #if "punjab" in eval_city_list:
-                #    eval_city_list.remove("punjab")
                 
                 print("cities ", self.tweet_summary.cities[0])
                 print("city_list ", city_list)
@@ -512,8 +480,6 @@ class tweet_classifier():
                         row["numbers"][0],
                         int(self.tweet_summary.id[0])
                         )
-            #if tweet.at[row, "cities"] == 1 and tweet.at[row, "numbers"] == 3:
-            #    print("mandi rate detected ", tweet.at[row, "cities"],tweet.at[row, "numbers"])
         return tweet
 
     def label_tweet(self):
@@ -622,27 +588,3 @@ class tweet_classifier():
         self.tweet_exploded=tweet
 
         self.tweet_exploded=self.process_tweet_line(self.tweet_exploded)
-
-        
-        
-
-
- 
-        
-
-# run every minute(s), hour, day at, day of the week, day of the week and time. Use "#" to block out which ones you don't want to use.  Remove it to active. Also, replace "jobone" and "jobtwo" with your new function names (if applicable)
-
-# schedule.every(5).minutes.do(jobone)
-# schedule.every().hour.do(jobone)
-# schedule.every().day.at("10:30").do(jobone)
-# schedule.every().monday.do(jobone)
-# schedule.every().wednesday.at("13:15").do(jobone)
-
-# schedule.every(0).minutes.do(classifier().label_tweet())
-# schedule.every().hour.do(jobtwo)
-# schedule.every().day.at("10:30").do(jobtwo)
-# schedule.every().monday.do(jobtwo)
-# schedule.every().wednesday.at("13:15").do(jobtwo)
-
-
-  #schedule.run_pending()

@@ -27,6 +27,7 @@ import datetime
 #import flask
 import pandas as pd
 from sys import platform
+from epakpoultry import epakpoultry
 
 def main() -> None:
     parser = configparser.ConfigParser()
@@ -94,23 +95,36 @@ def main() -> None:
     #job_classify_tweet()
 
 
+
+
+
+
     try:
             schedule.every(1).minutes.do(job_fetch_tweet_using_twint) ## not below 1 minute
-            schedule.every(1).minutes.do(job_read_tweet_csv)
-            schedule.every(1).minutes.do(job_classify_tweet)
-            schedule.every(1).minutes.do(job_translate_tweets)
-            
-            schedule.every(1).minutes.do(job_notify_tweets)
+            schedule.every(0.1).minutes.do(job_read_tweet_csv)
+            schedule.every(0.1).minutes.do(job_classify_tweet)
+            schedule.every(0.1).minutes.do(job_translate_tweets)
+            schedule.every(0.1).minutes.do(job_notify_tweets)
 
-            schedule.every(0.1).minutes.do(job_multi_jobs)
-            schedule.every(1).days.do(job_update_city_type_display_fields)            
+            schedule.every().day.at("15:00").do(job_reset_epakpoultry_daily_tables)
             
+            schedule.every(10).minutes.do(job_fetch_epakpoultry_breeder_culling_rate)
+            schedule.every(10).minutes.do(job_fetch_epakpoultry_doc_rate)
+            schedule.every(10).minutes.do(job_fetch_epakpoultry_egg_rate)
+            schedule.every(2).minutes.do(job_fetch_epakpoultry_farm_rate)
+            schedule.every(10).minutes.do(job_fetch_epakpoultry_layer_culling_rate)
+            schedule.every(10).minutes.do(job_fetch_epakpoultry_mandi_rate)
+            schedule.every(10).minutes.do(job_fetch_epakpoultry_supply_rate)
+            
+
+            #reset city_type table to show notification
+            schedule.every(1).days.do(job_update_city_type_display_fields)            
+
             while True:
                 schedule.run_pending()
                 time.sleep(1)
     except IndexError:
         RuntimeError('please supply a command for py_pkg - e.g. install.')
-
 
     return None
 
@@ -164,22 +178,42 @@ def job_notify_tweets():
 def job_update_city_type_display_fields():
     data_model_obj=data_model()
     data_model_obj.update_city_type_display_fields()
-
-def job_multi_jobs():
-    print("job_read_tweets")    
-    csv_reader_obj=csv_reader()
-    csv_reader_obj.read_tweet_csv_file()
-
-    print("job_classify_tweet")
-    tweet_classifier_obj = tweet_classifier()
-    tweet_classifier_obj.label_tweet()
-
-    print("job_translate_tweets")
-    data_model_obj=data_model()
-    data_model_obj.translate_unprocessed_tweet()
-
     
-    print("job_notify_tweets")
-    data_model_obj=data_model()
-    data_model_obj.notify_tweet()
+def job_fetch_epakpoultry_breeder_culling_rate():
+    epakpoultry_obj=epakpoultry()
+    print("job breeder culling rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('breeder_culling_rate')
+
+def job_fetch_epakpoultry_doc_rate():
+    epakpoultry_obj=epakpoultry()    
+    print("job doc rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('doc_rate')
+
+def job_fetch_epakpoultry_egg_rate():
+    epakpoultry_obj=epakpoultry()
+    print("job egg rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('egg_rate')
     
+def job_fetch_epakpoultry_farm_rate():
+    epakpoultry_obj=epakpoultry()    
+    print("job farm rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('farm_rate')
+
+def job_fetch_epakpoultry_layer_culling_rate():
+    epakpoultry_obj=epakpoultry()
+    print("job layer culling rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('layer_culling_rate')
+
+def job_fetch_epakpoultry_mandi_rate():
+    epakpoultry_obj=epakpoultry()
+    print("job mandi rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('mandi_rate')
+
+def job_fetch_epakpoultry_supply_rate():
+    epakpoultry_obj=epakpoultry()
+    print("job supply rate")
+    epakpoultry_obj.fetch_update_epakpoultry_rates('supply_rate')   
+
+def job_reset_epakpoultry_daily_tables():
+    data_model_obj=data_model()
+    data_model_obj.reset_epakpoultry_tables()
