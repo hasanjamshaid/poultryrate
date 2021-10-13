@@ -6,6 +6,7 @@ from selenium.common.exceptions import TimeoutException
 import pandas as pd
 from bs4 import BeautifulSoup
 from poultryrate.data_model import data_model
+import os
 
 class epakpoultry() :
     def web_crawler_epakpoultry(self, url):
@@ -13,7 +14,7 @@ class epakpoultry() :
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--incognito')
         options.add_argument('--headless')
-        driver = webdriver.Chrome(executable_path="C:\\Users\\DELL\\Downloads\\chromedriver_win32_94\\chromedriver.exe", options=options)
+        driver = webdriver.Chrome(executable_path=os.environ['config_path']+os.environ['webdriver_name'], options=options)
         driver.get(url)
         timeout = 30
         try:

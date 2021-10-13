@@ -7,8 +7,6 @@ from sqlalchemy import Integer, String
 from sqlalchemy.dialects.mysql import insert
 from sqlalchemy import delete
 from sqlalchemy import update
-from sqlalchemy.engine.url import URL
-from sqlalchemy.types import BIGINT
 from datetime import datetime, timedelta
 import os
 from poultryrate.cloud_messaging import notify_topic_subscribers

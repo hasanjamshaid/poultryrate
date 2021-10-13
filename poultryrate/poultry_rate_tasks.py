@@ -50,6 +50,7 @@ def main() -> None:
         os.environ['db_password']=parser['DEFAULT_LINUX']['db_password']
         os.environ['host']=parser['DEFAULT_LINUX']['host']
         os.environ['port']=parser['DEFAULT_LINUX']['port']
+        os.environ['webdriver_name']=parser['DEFAULT_LINUX']['webdriver_name']        
         os.environ['build_mode']=parser['DEFAULT_LINUX']['mode']
         os.environ['TWINT_DEBUG']=parser['DEFAULT_LINUX']['mode']     
 
@@ -67,6 +68,7 @@ def main() -> None:
         os.environ['db_password']=parser['DEFAULT_WINDOWS']['db_password']
         os.environ['host']=parser['DEFAULT_WINDOWS']['host']
         os.environ['port']=parser['DEFAULT_WINDOWS']['port']
+        os.environ['webdriver_name']=parser['DEFAULT_WINDOWS']['webdriver_name']         
         os.environ['build_mode']=parser['DEFAULT_WINDOWS']['mode']
         os.environ['TWINT_DEBUG']=parser['DEFAULT_WINDOWS']['mode']    
 
@@ -81,7 +83,7 @@ def main() -> None:
     print("db_host ", os.environ['db_host'])
     print("db_port ", os.environ['db_port'])
     print("db_name ", os.environ['db_name'])
-
+    print("webdriver_name ", os.environ['webdriver_name'])
 
 
     print("logging mode ", os.environ['build_mode'])
