@@ -10,11 +10,17 @@ import os
 
 class epakpoultry() :
     def web_crawler_epakpoultry(self, url):
-        options = webdriver.ChromeOptions()
-        options.add_argument('--ignore-certificate-errors')
-        options.add_argument('--incognito')
-        options.add_argument('--headless')
-        driver = webdriver.Chrome(executable_path=os.environ['config_path']+os.environ['webdriver_name'], options=options)
+        driver = webdriver.PhantomJS(executable_path=os.environ['config_path']+os.environ['webdriver_name'])
+        driver.set_window_size(1024, 768) # optional
+        driver.get(url)
+        
+
+        #options = webdriver.ChromeOptions()
+        #options.add_argument('--no-sandbox')
+        #options.add_argument('--ignore-certificate-errors')
+        #options.add_argument('--incognito')
+        #options.add_argument('--headless')
+        #driver = webdriver.Chrome(executable_path=os.environ['config_path']+os.environ['webdriver_name'], options=options)
         driver.get(url)
         timeout = 30
         try:

@@ -108,15 +108,15 @@ def main() -> None:
             schedule.every(0.1).minutes.do(job_translate_tweets)
             schedule.every(0.1).minutes.do(job_notify_tweets)
 
-            schedule.every().day.at("15:00").do(job_reset_epakpoultry_daily_tables)
+            #schedule.every().day.at("15:00").do(job_reset_epakpoultry_daily_tables)
             
-            schedule.every(10).minutes.do(job_fetch_epakpoultry_breeder_culling_rate)
-            schedule.every(10).minutes.do(job_fetch_epakpoultry_doc_rate)
-            schedule.every(10).minutes.do(job_fetch_epakpoultry_egg_rate)
-            schedule.every(2).minutes.do(job_fetch_epakpoultry_farm_rate)
-            schedule.every(10).minutes.do(job_fetch_epakpoultry_layer_culling_rate)
-            schedule.every(10).minutes.do(job_fetch_epakpoultry_mandi_rate)
-            schedule.every(10).minutes.do(job_fetch_epakpoultry_supply_rate)
+            #schedule.every(10).minutes.do(job_fetch_epakpoultry_breeder_culling_rate)
+            #schedule.every(10).minutes.do(job_fetch_epakpoultry_doc_rate)
+            #schedule.every(10).minutes.do(job_fetch_epakpoultry_egg_rate)
+            #schedule.every(2).minutes.do(job_fetch_epakpoultry_farm_rate)
+            #chedule.every(10).minutes.do(job_fetch_epakpoultry_layer_culling_rate)
+            #schedule.every(10).minutes.do(job_fetch_epakpoultry_mandi_rate)
+            #schedule.every(10).minutes.do(job_fetch_epakpoultry_supply_rate)
             
 
             #reset city_type table to show notification
